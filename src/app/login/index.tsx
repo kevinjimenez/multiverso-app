@@ -6,7 +6,7 @@ import { router } from 'expo-router';
 const LoginScreen = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View className="bg-white px-8" style={{ flex: 1 }}>
+      <View className="bg-white px-8 pb-10" style={{ flex: 1 }}>
         <View
           className="flex-col items-center justify-center gap-y-3"
           style={{ flex: 1 }}
