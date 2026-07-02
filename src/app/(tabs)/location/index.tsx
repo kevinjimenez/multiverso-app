@@ -1,12 +1,12 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import { View, Text } from 'react-native';
+import React from 'react';
 
 const LocationScreen = () => {
   return (
     <View>
       <Text>LocationScreen</Text>
     </View>
-  )
-}
+  );
+};
 
-export default LocationScreen
+export default LocationScreen;
