@@ -6,7 +6,7 @@ import { router } from 'expo-router'
 const LoginScreen = () => {
   return (
     <SafeAreaView>
-      <View>
+      <View className='bg-red-100'>
         <Text>LoginScreen</Text>
         <Pressable
           className="p-3 rounded-sm bg-slate-300 active:opacity-90"
