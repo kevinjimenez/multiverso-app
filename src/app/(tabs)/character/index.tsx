@@ -1,5 +1,6 @@
 import Ionicons from '@react-native-vector-icons/ionicons';
-import { FlatList, ScrollView, Text, View } from 'react-native';
+import { router } from 'expo-router';
+import { FlatList, Pressable, ScrollView, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const CharacterScreen = () => {
@@ -69,11 +70,11 @@ const CharacterScreen = () => {
             data={data}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
-              <View className='py-5 justify-between flex-row items-center'>
+              <View className='justify-between flex-row items-center border border-gray-300 my-1 px-3.5 py-2 rounded-xl'>
                 <View className='flex-row gap-4'>
                   <View className='size-16 bg-yellow-300 rounded-lg' />
                   <View className='flex-col py-1.5'>
-                    <View className='flex-1'>                      {/* ocupa TODO el espacio restante */}
+                    <View className='flex-1'>
                         <Text>{item.title}</Text>
                       </View>
                     <View className='flex-row gap-x-5'>
@@ -86,7 +87,9 @@ const CharacterScreen = () => {
                     </View>
                   </View>
                 </View>
-                <Ionicons name="chevron-forward-outline" size={20} color={'gray'} />
+                <Pressable onPress={() => {router.push(`/(tabs)/character/${item.id}`)}}>
+                  <Ionicons name="chevron-forward-outline" size={20} color={'gray'} />
+                </Pressable>
               </View>
             )}
           />

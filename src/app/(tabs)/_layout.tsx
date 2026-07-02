@@ -17,7 +17,7 @@ const TabsLayout = () => {
       }}
     >
       <Tabs.Screen
-        name="character/index"
+        name="character"
         options={{
           title: 'Personajes',
           tabBarIcon: ({ color, size }) => <Ionicons name="glasses-outline" color={color} size={size} />,
