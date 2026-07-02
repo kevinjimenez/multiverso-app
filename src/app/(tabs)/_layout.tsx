@@ -1,9 +1,21 @@
-import { Tabs } from 'expo-router';
 import Ionicons from '@react-native-vector-icons/ionicons';
+import { Tabs } from 'expo-router';
 
 const TabsLayout = () => {
   return (
-    <Tabs>
+    <Tabs
+      screenOptions={{
+        tabBarActiveTintColor: 'indigo',
+        headerShown: false
+        // headerTitle: () => <View className='flex flex-row'>
+        //   <View className='flex flex-col'>
+        //     <Text>Multiverso</Text>
+        //     <Text>Personajes</Text>
+        //   </View>
+        //   <Text>20 personajes</Text>
+        // </View>
+      }}
+    >
       <Tabs.Screen
         name="character/index"
         options={{
