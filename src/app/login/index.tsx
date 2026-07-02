@@ -6,15 +6,24 @@ import { router } from 'expo-router';
 const LoginScreen = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View className="bg-red-100" style={{ flex: 1 }}>
-        <Text>LoginScreen</Text>
+      <View className="bg-white px-8" style={{ flex: 1 }}>
+        <View
+          className="flex-col items-center justify-center gap-y-3"
+          style={{ flex: 1 }}
+        >
+          <Text className="font-semibold text-3xl uppercase">Multiverso</Text>
+          <Text className="w-56 text-pretty text-slate-500">
+            Explora cada personaje del multiverso de Rick and Morty
+          </Text>
+        </View>
+
         <Pressable
-          className="p-3 rounded-sm bg-slate-300 active:opacity-90"
+          className="py-4 rounded-xl bg-green-700"
           onPress={() => {
             router.replace('/(tabs)/character');
           }}
         >
-          <Text className="text-white text-center">Login</Text>
+          <Text className="text-white text-center">Entrar</Text>
         </Pressable>
       </View>
     </SafeAreaView>

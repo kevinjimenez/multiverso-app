@@ -42,11 +42,13 @@ const CharacterScreen = () => {
       style={{ flex: 1, paddingTop: top, paddingHorizontal: 15 }}
     >
       <View className="flex-row justify-between items-center">
-        <View className="flex-col">
-          <Text>Multiverso</Text>
-          <Text>Personajes</Text>
+        <View className="flex-col gap-y-0.5">
+          <Text className="uppercase text-xs font-semibold">Multiverso</Text>
+          <Text className="text-4xl font-bold">Personajes</Text>
         </View>
-        <Text>20 personajes</Text>
+        <Text className="text-slate-500 font-medium text-sm">
+          20 personajes
+        </Text>
       </View>
 
       <ScrollView
