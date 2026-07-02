@@ -4,7 +4,6 @@ import { FlatList, Pressable, ScrollView, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const CharacterScreen = () => {
-
   // const { width, height } = useWindowDimensions();
   const { top } = useSafeAreaInsets();
 
@@ -38,63 +37,63 @@ const CharacterScreen = () => {
   ];
 
   return (
-    <View className='bg-white' style={{flex: 1, paddingTop: top, paddingHorizontal: 15}}>
-      <View className='flex-row justify-between items-center'>
-        <View className='flex-col'>
-          <Text>
-            Multiverso
-          </Text>
-          <Text>
-            Personajes
-          </Text>
+    <View
+      className="bg-white"
+      style={{ flex: 1, paddingTop: top, paddingHorizontal: 15 }}
+    >
+      <View className="flex-row justify-between items-center">
+        <View className="flex-col">
+          <Text>Multiverso</Text>
+          <Text>Personajes</Text>
         </View>
-        <Text>
-          20 personajes
-        </Text>
+        <Text>20 personajes</Text>
       </View>
 
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
-        className='py-5'
+        className="py-5"
         contentContainerStyle={{ gap: 8 }}
       >
         {tags.map((tag, index) => (
-          <View key={index} className='h-8 justify-center bg-white px-4 py-1 rounded-2xl border-gray-200 border'>
-            <Text className='text-sm font-medium'>{tag}</Text>
+          <View
+            key={index}
+            className="h-8 justify-center bg-white px-4 py-1 rounded-2xl border-gray-200 border"
+          >
+            <Text className="text-sm font-medium">{tag}</Text>
           </View>
         ))}
       </ScrollView>
 
       <FlatList
-            data={data}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => (
-              <Pressable className='justify-between flex-row items-center border border-gray-300 my-1 px-3.5 py-2 rounded-xl' onPress={() => {router.push(`/(tabs)/character/${item.id}`)}}>
-                <View className='flex-row gap-4'>
-                  <View className='size-16 bg-yellow-300 rounded-lg' />
-                  <View className='flex-col py-1.5'>
-                    <View className='flex-1'>
-                        <Text>{item.title}</Text>
-                      </View>
-                    <View className='flex-row gap-x-5'>
-                      <Text>
-                        {item.id}
-                      </Text>
-                      <Text>
-                        {item.title}
-                      </Text>
-                    </View>
-                  </View>
+        data={data}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <Pressable
+            className="justify-between flex-row items-center border border-gray-300 my-1 px-3.5 py-2 rounded-xl"
+            onPress={() => {
+              router.push(`/(tabs)/character/${item.id}`);
+            }}
+          >
+            <View className="flex-row gap-4">
+              <View className="size-16 bg-yellow-300 rounded-lg" />
+              <View className="flex-col py-1.5">
+                <View className="flex-1">
+                  <Text>{item.title}</Text>
                 </View>
+                <View className="flex-row gap-x-5">
+                  <Text>{item.id}</Text>
+                  <Text>{item.title}</Text>
+                </View>
+              </View>
+            </View>
 
-                  <Ionicons name="chevron-forward-outline" size={20} color={'gray'} />
-
-              </Pressable>
-            )}
-          />
+            <Ionicons name="chevron-forward-outline" size={20} color={'gray'} />
+          </Pressable>
+        )}
+      />
     </View>
-  )
-}
+  );
+};
 
-export default CharacterScreen
+export default CharacterScreen;

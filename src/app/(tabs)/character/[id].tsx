@@ -1,6 +1,6 @@
 import Ionicons from '@react-native-vector-icons/ionicons';
-import { router, useLocalSearchParams } from 'expo-router'
-import { Pressable, Text, View } from 'react-native'
+import { router, useLocalSearchParams } from 'expo-router';
+import { Pressable, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const CharacterID = () => {
@@ -8,11 +8,11 @@ const CharacterID = () => {
 
   const goToback = () => {
     if (router.canGoBack()) {
-      router.back()
+      router.back();
     } else {
-      router.replace('/(tabs)/character')
+      router.replace('/(tabs)/character');
     }
-  }
+  };
 
   return (
     <SafeAreaView>
@@ -23,7 +23,7 @@ const CharacterID = () => {
         <Text>Character {id}</Text>
       </View>
     </SafeAreaView>
-  )
-}
+  );
+};
 
-export default CharacterID
+export default CharacterID;

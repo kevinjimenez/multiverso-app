@@ -6,7 +6,7 @@ const TabsLayout = () => {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: 'indigo',
-        headerShown: false
+        headerShown: false,
         // headerTitle: () => <View className='flex flex-row'>
         //   <View className='flex flex-col'>
         //     <Text>Multiverso</Text>
@@ -20,32 +20,40 @@ const TabsLayout = () => {
         name="character"
         options={{
           title: 'Personajes',
-          tabBarIcon: ({ color, size }) => <Ionicons name="glasses-outline" color={color} size={size} />,
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="glasses-outline" color={color} size={size} />
+          ),
         }}
       />
       <Tabs.Screen
         name="episode/index"
         options={{
           title: 'Episodios',
-          tabBarIcon: ({ color, size }) => <Ionicons name="film-outline" color={color} size={size} />,
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="film-outline" color={color} size={size} />
+          ),
         }}
       />
       <Tabs.Screen
         name="location/index"
         options={{
           title: 'Lugares',
-          tabBarIcon: ({ color, size }) => <Ionicons name="earth-outline" color={color} size={size} />,
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="earth-outline" color={color} size={size} />
+          ),
         }}
       />
       <Tabs.Screen
         name="profile/index"
         options={{
           title: 'Perfil',
-          tabBarIcon: ({ color, size }) => <Ionicons name="person-outline" color={color} size={size} />,
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="person-outline" color={color} size={size} />
+          ),
         }}
       />
     </Tabs>
   );
-}
+};
 
 export default TabsLayout;
