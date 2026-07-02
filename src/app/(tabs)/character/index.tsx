@@ -70,7 +70,7 @@ const CharacterScreen = () => {
             data={data}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
-              <View className='justify-between flex-row items-center border border-gray-300 my-1 px-3.5 py-2 rounded-xl'>
+              <Pressable className='justify-between flex-row items-center border border-gray-300 my-1 px-3.5 py-2 rounded-xl' onPress={() => {router.push(`/(tabs)/character/${item.id}`)}}>
                 <View className='flex-row gap-4'>
                   <View className='size-16 bg-yellow-300 rounded-lg' />
                   <View className='flex-col py-1.5'>
@@ -87,10 +87,10 @@ const CharacterScreen = () => {
                     </View>
                   </View>
                 </View>
-                <Pressable onPress={() => {router.push(`/(tabs)/character/${item.id}`)}}>
+
                   <Ionicons name="chevron-forward-outline" size={20} color={'gray'} />
-                </Pressable>
-              </View>
+
+              </Pressable>
             )}
           />
     </View>
