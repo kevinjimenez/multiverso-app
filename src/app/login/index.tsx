@@ -61,6 +61,7 @@ const LoginScreen = () => {
               <>
                 <View className="gap-y-3 my-5">
                   <TextInput
+                    placeholderTextColor="#A6AEB6"
                     placeholder="Username"
                     value={values.username}
                     onChangeText={handleChange('username')}
@@ -72,6 +73,7 @@ const LoginScreen = () => {
                     }`}
                   />
                   <TextInput
+                    placeholderTextColor="#A6AEB6"
                     placeholder="Password"
                     value={values.password}
                     onChangeText={handleChange('password')}
@@ -87,7 +89,7 @@ const LoginScreen = () => {
 
                 <Pressable
                   disabled={!values.username || !values.password}
-                  className={`py-4 rounded-xl ${
+                  className={`py-4 rounded-xl active:opacity-80 ${
                     !values.username || !values.password
                       ? 'bg-accent/40'
                       : 'bg-accent'
