@@ -1,7 +1,8 @@
 import { useCharacters } from '@/hooks/useCharacters';
 import Ionicons from '@react-native-vector-icons/ionicons';
+import { Image } from 'expo-image';
 import { router } from 'expo-router';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -12,12 +13,10 @@ import {
   Text,
   View,
 } from 'react-native';
-import { Image } from 'expo-image';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const CharacterScreen = () => {
   // const { width, height } = useWindowDimensions();
-  const [imageRetries, setImageRetries] = useState<Record<string, number>>({});
   const { top } = useSafeAreaInsets();
   const { rickAndMorty } = useCharacters();
   const characters = rickAndMorty.data?.pages.flatMap((page) => page.results);
@@ -44,14 +43,20 @@ const CharacterScreen = () => {
     console.log('Carga pagina siguiente');
 
     // rickAndMorty.fetchNextPage && rickAndMorty.fetchNextPage();
-    rickAndMorty.fetchNextPage().finally(() => {
-      isLoading.current = false;
+    // rickAndMorty.fetchNextPage().finally(() => {
+    //   isLoading.current = false;
+    // });
+    rickAndMorty.fetchNextPage().then((result) => {
+      if (!result.isError) {
+        isLoading.current = false; // solo se libera si la respuesta fue OK (200)
+      }
+      // si hubo error, isLoading.current queda en true -> no deja disparar más fetch por scroll
     });
   };
 
   if (rickAndMorty.isLoading) {
     return (
-      <View>
+      <View className="flex-1 justify-center items-center">
         <ActivityIndicator />
       </View>
     );
@@ -116,41 +121,24 @@ const CharacterScreen = () => {
               router.push(`/(tabs)/character/${item.id}`);
             }}
           >
-            <View className="flex-row gap-4">
-              {/*<Image
-                source={{ uri: item.image }}
-                contentFit="cover"
-                style={{ width: 64, height: 64, borderRadius: 8 }}
-                placeholder={{ blurhash: 'L6PZfSi_.AyE_3t7t7R**0o#DgR4' }}
-                transition={200}
-                cachePolicy="memory-disk"
-              />*/}
+            <View className="flex-row gap-4 flex-1">
               <Image
-                key={`${item.id}-${imageRetries[item.id] ?? 0}`}
                 source={{ uri: item.image }}
                 contentFit="cover"
                 style={{ width: 64, height: 64, borderRadius: 8 }}
                 placeholder={{ blurhash: 'L6PZfSi_.AyE_3t7t7R**0o#DgR4' }}
                 transition={200}
                 cachePolicy="memory-disk"
-                onError={() => {
-                  const count = imageRetries[item.id] ?? 0;
-                  if (count >= 3) return; // máximo 3 intentos
-
-                  setTimeout(
-                    () => {
-                      setImageRetries((prev) => ({
-                        ...prev,
-                        [item.id]: (prev[item.id] ?? 0) + 1,
-                      }));
-                    },
-                    1000 * (count + 1), // 1s, 2s, 3s... backoff simple
-                  );
-                }}
               />
-              <View className="flex-col py-1.5">
+              <View className="flex-col py-1.5 flex-1">
                 <View className="flex-1">
-                  <Text className="text-ink font-semibold">{item.name}</Text>
+                  <Text
+                    className="text-ink font-semibold"
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                  >
+                    {item.name}
+                  </Text>
                 </View>
                 <View className="flex-row gap-x-5">
                   <View className="flex-row justify-center items-center gap-x-1">
@@ -159,7 +147,13 @@ const CharacterScreen = () => {
                     />
                     <Text className="text-sm">{item.status}</Text>
                   </View>
-                  <Text className="text-sm text-ink-soft">{item.species}</Text>
+                  <Text
+                    className="text-sm text-ink-soft"
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                  >
+                    {item.species}
+                  </Text>
                 </View>
               </View>
             </View>
