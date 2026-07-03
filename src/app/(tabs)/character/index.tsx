@@ -1,40 +1,66 @@
+import { useCharacters } from '@/hooks/useCharacters';
 import Ionicons from '@react-native-vector-icons/ionicons';
+import { Image } from 'expo-image';
 import { router } from 'expo-router';
-import { FlatList, Pressable, ScrollView, Text, View } from 'react-native';
+import { useRef, useState } from 'react';
+import {
+  ActivityIndicator,
+  FlatList,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
+  Pressable,
+  ScrollView,
+  Text,
+  View,
+} from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const CharacterScreen = () => {
   // const { width, height } = useWindowDimensions();
   const { top } = useSafeAreaInsets();
+  const { rickAndMorty } = useCharacters();
+  const characters = rickAndMorty.data?.pages.flatMap((page) => page.results);
+  const totalCount = rickAndMorty.data?.pages[0]?.info.count ?? 0;
+  const isLoading = useRef(false);
+
+  const [status, setStatus] = useState('Todos');
 
   const tags = ['Todos', 'Vivo', 'Muerto', 'Humano'];
 
-  const data = [
-    { id: '1', title: 'Elemento 1' },
-    { id: '2', title: 'Elemento 2' },
-    { id: '3', title: 'Elemento 3' },
-    { id: '4', title: 'Elemento 1' },
-    { id: '5', title: 'Elemento 2' },
-    { id: '6', title: 'Elemento 3' },
-    { id: '7', title: 'Elemento 1' },
-    { id: '8', title: 'Elemento 2' },
-    { id: '9', title: 'Elemento 3' },
-    { id: '10', title: 'Elemento 1' },
-    { id: '11', title: 'Elemento 2' },
-    { id: '12', title: 'Elemento 3' },
-    { id: '14', title: 'Elemento 1' },
-    { id: '15', title: 'Elemento 2' },
-    { id: '16', title: 'Elemento 3' },
-    { id: '17', title: 'Elemento 1' },
-    { id: '18', title: 'Elemento 2' },
-    { id: '19', title: 'Elemento 3' },
-    { id: '20', title: 'Elemento 1' },
-    { id: '21', title: 'Elemento 2' },
-    { id: '22', title: 'Elemento 3' },
-    { id: '23', title: 'Elemento 1' },
-    { id: '24', title: 'Elemento 2' },
-    { id: '25', title: 'Elemento 3' },
-  ];
+  const onScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    if (isLoading.current) return;
+
+    const { contentOffset, layoutMeasurement, contentSize } = event.nativeEvent;
+
+    const isEndReached =
+      contentOffset.y + layoutMeasurement.height + 600 >= contentSize.height;
+
+    if (!isEndReached) return;
+    if (!rickAndMorty.hasNextPage) return;
+
+    isLoading.current = true;
+
+    console.log('Carga pagina siguiente');
+
+    // rickAndMorty.fetchNextPage && rickAndMorty.fetchNextPage();
+    // rickAndMorty.fetchNextPage().finally(() => {
+    //   isLoading.current = false;
+    // });
+    rickAndMorty.fetchNextPage().then((result) => {
+      if (!result.isError) {
+        isLoading.current = false; // solo se libera si la respuesta fue OK (200)
+      }
+      // si hubo error, isLoading.current queda en true -> no deja disparar más fetch por scroll
+    });
+  };
+
+  if (rickAndMorty.isLoading) {
+    return (
+      <View className="flex-1 justify-center items-center">
+        <ActivityIndicator />
+      </View>
+    );
+  }
 
   return (
     <View
@@ -42,11 +68,18 @@ const CharacterScreen = () => {
       style={{ flex: 1, paddingTop: top, paddingHorizontal: 15 }}
     >
       <View className="flex-row justify-between items-center">
-        <View className="flex-col">
-          <Text>Multiverso</Text>
-          <Text>Personajes</Text>
+        <View className="flex-col gap-y-0.5">
+          <Text
+            className="uppercase text-[0.85rem] font-semibold text-accent"
+            style={{ letterSpacing: 1 }}
+          >
+            Multiverso
+          </Text>
+          <Text className="text-4xl font-bold text-ink">Personajes</Text>
         </View>
-        <Text>20 personajes</Text>
+        <Text className="text-ink-muted font-medium text-sm">
+          {totalCount} personajes
+        </Text>
       </View>
 
       <ScrollView
@@ -56,18 +89,31 @@ const CharacterScreen = () => {
         contentContainerStyle={{ gap: 8 }}
       >
         {tags.map((tag, index) => (
-          <View
+          <Pressable
             key={index}
-            className="h-8 justify-center bg-white px-4 py-1 rounded-2xl border-gray-200 border"
+            className={`h-8 justify-center px-4 py-1 rounded-2xl border ${
+              status === tag
+                ? 'bg-ink border-ink'
+                : 'bg-white border-gray-200 active:bg-red-200'
+            }`}
+            onPress={() => {
+              setStatus(tag);
+            }}
           >
-            <Text className="text-sm font-medium">{tag}</Text>
-          </View>
+            <Text
+              className={`text-sm font-medium ${status === tag ? 'text-white' : ''}`}
+            >
+              {tag}
+            </Text>
+          </Pressable>
         ))}
       </ScrollView>
 
       <FlatList
-        data={data}
+        data={characters}
         keyExtractor={(item) => item.id}
+        onScroll={onScroll}
+        showsVerticalScrollIndicator={false}
         renderItem={({ item }) => (
           <Pressable
             className="justify-between flex-row items-center border border-gray-300 my-1 px-3.5 py-2 rounded-xl"
@@ -75,20 +121,48 @@ const CharacterScreen = () => {
               router.push(`/(tabs)/character/${item.id}`);
             }}
           >
-            <View className="flex-row gap-4">
-              <View className="size-16 bg-yellow-300 rounded-lg" />
-              <View className="flex-col py-1.5">
+            <View className="flex-row gap-4 flex-1">
+              <Image
+                source={{ uri: item.image }}
+                contentFit="cover"
+                style={{ width: 64, height: 64, borderRadius: 8 }}
+                placeholder={{ blurhash: 'L6PZfSi_.AyE_3t7t7R**0o#DgR4' }}
+                transition={200}
+                cachePolicy="memory-disk"
+              />
+              <View className="flex-col py-1.5 flex-1">
                 <View className="flex-1">
-                  <Text>{item.title}</Text>
+                  <Text
+                    className="text-ink font-semibold"
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                  >
+                    {item.name}
+                  </Text>
                 </View>
                 <View className="flex-row gap-x-5">
-                  <Text>{item.id}</Text>
-                  <Text>{item.title}</Text>
+                  <View className="flex-row justify-center items-center gap-x-1">
+                    <View
+                      className={`rounded-full size-1.5 ${item.status === 'Alive' ? 'bg-status-alive' : item.status === 'Dead' ? 'bg-status-dead' : 'bg-status-unknown'}`}
+                    />
+                    <Text className="text-sm">{item.status}</Text>
+                  </View>
+                  <Text
+                    className="text-sm text-ink-soft"
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                  >
+                    {item.species}
+                  </Text>
                 </View>
               </View>
             </View>
 
-            <Ionicons name="chevron-forward-outline" size={20} color={'gray'} />
+            <Ionicons
+              name="chevron-forward-outline"
+              size={20}
+              color="#A6AEB6"
+            />
           </Pressable>
         )}
       />

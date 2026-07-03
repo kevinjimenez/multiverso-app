@@ -5,7 +5,7 @@ const TabsLayout = () => {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: 'indigo',
+        tabBarActiveTintColor: '#11B0A3',
         headerShown: false,
         // headerTitle: () => <View className='flex flex-row'>
         //   <View className='flex flex-col'>
