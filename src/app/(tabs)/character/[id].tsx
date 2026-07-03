@@ -10,10 +10,7 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
-import {
-  SafeAreaView,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const CharacterID = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
