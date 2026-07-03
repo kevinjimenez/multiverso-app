@@ -8,8 +8,8 @@ const ProfileScreen = () => {
   const data = ['Cuenta', 'Notificaciones', 'Apariencia', 'Ayuda y soporte'];
 
   return (
-    <View className="px-6 pb-20 bg-white" style={{ flex: 1, paddingTop: 120 }}>
-      <View className="items-center">
+    <View className="px-6 pb-20 bg-white" style={{ flex: 1 }}>
+      <View className="items-center pt-24">
         <View className="size-20 rounded-full bg-accent justify-center items-center shadow">
           <Text className="text-3xl font-semibold text-white">R</Text>
         </View>
@@ -20,11 +20,11 @@ const ProfileScreen = () => {
         </View>
       </View>
 
-      <View style={{ flex: 1 }}>
+      <View className="mb-8">
         <Text className="text-ink-soft text-xs font-medium pt-3 pb-2">
           AJUSTES
         </Text>
-        <View className="border rounded-xl border-surface-line ">
+        <View className="border rounded-xl border-surface-line">
           {data.map((value, index) => (
             <View
               key={index}
