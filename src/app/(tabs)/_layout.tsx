@@ -26,7 +26,7 @@ const TabsLayout = () => {
         }}
       />
       <Tabs.Screen
-        name="episode/index"
+        name="episode"
         options={{
           title: 'Episodios',
           tabBarIcon: ({ color, size }) => (

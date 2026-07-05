@@ -1,5 +1,7 @@
-import { Link, router } from 'expo-router';
+import { router } from 'expo-router';
+import { Formik } from 'formik';
 import {
+  Image,
   KeyboardAvoidingView,
   Platform,
   Pressable,
@@ -7,30 +9,18 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import { Formik } from 'formik';
 import { ScrollView } from 'react-native-gesture-handler';
-import {
-  SafeAreaView,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const LoginScreen = () => {
   const safeArea = useSafeAreaInsets();
 
   return (
-    // <KeyboardAvoidingView
-    //   style={{ flex: 1 }}
-    //   behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-    // >
     <ScrollView
       style={{ paddingTop: safeArea.top }}
       contentContainerStyle={{ flexGrow: 1 }}
       keyboardShouldPersistTaps="handled"
     >
-      {/*<KeyboardAvoidingView
-        style={{ flex: 1 }}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      >*/}
       <View className="bg-white px-8 pb-8" style={{ flex: 1 }}>
         <KeyboardAvoidingView
           style={{ flex: 1 }}
@@ -40,6 +30,11 @@ const LoginScreen = () => {
             className="flex-col items-center justify-center gap-y-3"
             style={{ flex: 1 }}
           >
+            <Image
+              source={require('../../../assets/images/RM-logo.png')}
+              className="size-40"
+              resizeMode="contain"
+            />
             <Text
               className="font-semibold text-3xl uppercase"
               style={{ letterSpacing: 5 }}
@@ -103,15 +98,6 @@ const LoginScreen = () => {
           </Formik>
 
           <View className="gap-y-4 mt-4">
-            {/*<Pressable
-              className="py-4 rounded-xl bg-accent shadow shadow-accent-600"
-              onPress={() => {
-                router.replace('/(tabs)/character');
-              }}
-            >
-              <Text className="text-white text-center text-lg">Entrar</Text>
-            </Pressable>*/}
-
             <Pressable
               onPress={() => {
                 router.replace('/(tabs)/character');
@@ -128,9 +114,7 @@ const LoginScreen = () => {
           </View>
         </KeyboardAvoidingView>
       </View>
-      {/*</KeyboardAvoidingView>*/}
     </ScrollView>
-    // </KeyboardAvoidingView>
   );
 };
 
