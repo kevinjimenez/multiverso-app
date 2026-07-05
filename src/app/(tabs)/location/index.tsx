@@ -1,6 +1,14 @@
 import { useLocations } from '@/hooks/useLocations';
 import Ionicons from '@react-native-vector-icons/ionicons';
-import { ActivityIndicator, FlatList, Text, View, Image } from 'react-native';
+import { router } from 'expo-router';
+import {
+  ActivityIndicator,
+  FlatList,
+  Text,
+  View,
+  Image,
+  Pressable,
+} from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const LocationScreen = () => {
@@ -49,7 +57,16 @@ const LocationScreen = () => {
           }
         }}
         renderItem={({ item }) => (
-          <View className="justify-between flex-row items-center border border-gray-300 my-1 px-3.5 py-2 rounded-xl">
+          <Pressable
+            onPress={() => {
+              // router.push('/location/modal');
+              router.push({
+                pathname: '/location/modal',
+                params: { id: item.id },
+              });
+            }}
+            className="justify-between flex-row items-center border border-gray-300 my-1 px-3.5 py-2 rounded-xl"
+          >
             <View className="flex-row gap-4 flex-1">
               <Image
                 source={require('../../../../assets/images/location-icon.png')}
@@ -82,7 +99,7 @@ const LocationScreen = () => {
                 </Text>
               </View>
             </View>
-          </View>
+          </Pressable>
         )}
       />
     </View>

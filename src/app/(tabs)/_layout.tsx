@@ -35,7 +35,7 @@ const TabsLayout = () => {
         }}
       />
       <Tabs.Screen
-        name="location/index"
+        name="location"
         options={{
           title: 'Lugares',
           tabBarIcon: ({ color, size }) => (
