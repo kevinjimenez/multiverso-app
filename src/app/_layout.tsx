@@ -14,7 +14,7 @@ const RootLayout = () => {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <QueryClientProvider client={queryClient}>
         <Slot />
-        <StatusBar style="auto" />
+        <StatusBar style="dark" />
       </QueryClientProvider>
     </GestureHandlerRootView>
   );

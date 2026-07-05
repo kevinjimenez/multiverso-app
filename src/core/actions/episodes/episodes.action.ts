@@ -4,9 +4,9 @@ interface Options {
   page?: number;
 }
 
-export const characterRickAndMortyAction = async ({ page = 1 }: Options) => {
+export const episodesRickAndMortyAction = async ({ page = 1 }: Options) => {
   try {
-    const { data } = await rickAndMortyApi.get<any>('/character', {
+    const { data } = await rickAndMortyApi.get<any>('/episode', {
       params: {
         page,
       },

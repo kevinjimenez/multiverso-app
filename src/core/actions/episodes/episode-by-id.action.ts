@@ -1,8 +1,8 @@
 import { rickAndMortyApi } from '@/core/api/rick-and-morty-api';
 
-export const characterRickAndMortyByIdAction = async (id: number | string) => {
+export const episodeByIdAction = async (id: number | string) => {
   try {
-    const { data } = await rickAndMortyApi.get<any>(`/character/${id}`);
+    const { data } = await rickAndMortyApi.get<any>(`/episode/${id}`);
 
     return data;
   } catch (error) {

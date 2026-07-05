@@ -49,10 +49,10 @@ const ProfileScreen = () => {
       </View>
 
       <Pressable
-        className="w-full p-4 border border-status-dead rounded-xl"
+        className="group w-full p-4 border border-status-dead rounded-xl active:bg-status-dead"
         onPress={() => router.replace('/')}
       >
-        <Text className="text-center text-status-dead font-semibold">
+        <Text className="text-center text-status-dead font-semibold group-active:text-white">
           Cerrar sesión
         </Text>
       </Pressable>
