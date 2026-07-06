@@ -10,6 +10,24 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        primary: {
+          DEFAULT: '#11B0A3',
+          50: '#E9F6F4',
+          100: '#C9EAE6',
+          600: '#11B0A3', // color base
+          700: '#0E9A8F',
+        },
+
+        secondary: {
+          DEFAULT: '#5A626B',
+          600: '#5A626B', // color base
+        },
+
+        tertiary: {
+          DEFAULT: '#E5484D',
+          600: '#E5484D', // color base
+        },
+
         // Acento principal (teal) — botones, enlaces, estados activos
         accent: {
           DEFAULT: '#11B0A3',

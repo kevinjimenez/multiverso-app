@@ -1,10 +1,10 @@
+import BaseButton from '@/components/ui/BaseButton';
 import { router } from 'expo-router';
 import { Formik } from 'formik';
 import {
   Image,
   KeyboardAvoidingView,
   Platform,
-  Pressable,
   Text,
   TextInput,
   View,
@@ -14,6 +14,10 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const LoginScreen = () => {
   const safeArea = useSafeAreaInsets();
+
+  const goToHome = () => {
+    router.replace('/(tabs)/character');
+  };
 
   return (
     <ScrollView
@@ -81,32 +85,20 @@ const LoginScreen = () => {
                     }`}
                   />
                 </View>
-
-                <Pressable
-                  disabled={!values.username || !values.password}
-                  className={`py-4 rounded-xl active:opacity-80 ${
-                    !values.username || !values.password
-                      ? 'bg-accent/40'
-                      : 'bg-accent'
-                  }`}
-                  onPress={() => handleSubmit()}
+                <BaseButton
+                  onPress={goToHome}
+                  disable={!values.username || !values.password}
                 >
-                  <Text className="text-white text-center text-lg">Entrar</Text>
-                </Pressable>
+                  Entrar
+                </BaseButton>
               </>
             )}
           </Formik>
 
           <View className="gap-y-4 mt-4">
-            <Pressable
-              onPress={() => {
-                router.replace('/(tabs)/character');
-              }}
-            >
-              <Text className="text-accent text-center text-[0.95rem] font-semibold">
-                Continuar como invitado
-              </Text>
-            </Pressable>
+            <BaseButton onPress={goToHome} variant="text-only">
+              Continuar como invitado
+            </BaseButton>
 
             <Text className="text-ink-faint text-center text-[0.8rem]">
               Al continuar aceptas los terminos del multiverso
