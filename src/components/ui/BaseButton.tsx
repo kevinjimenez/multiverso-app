@@ -55,7 +55,7 @@ const BaseButton = ({
         onPress={onPress}
       >
         <Text
-          className={`text-center ${textColor} font-semibold group-active:text-white`}
+          className={`text-center ${textColor} font-semibold group-active:${textColor}`}
         >
           {children}
         </Text>

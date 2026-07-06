@@ -17,6 +17,7 @@ import {
 const CharactersScreen = () => {
   const { characters } = useCharacters();
   const isLoading = useRef(false);
+
   const [tag, setTag] = useState('');
 
   const data = characters.data?.pages.flatMap((page) => page.results);

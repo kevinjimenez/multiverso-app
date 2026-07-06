@@ -11,9 +11,8 @@ import { ActivityIndicator, ScrollView, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const CharacterScreen = () => {
-  const { id } = useLocalSearchParams<{ id: string }>();
   const safeArea = useSafeAreaInsets();
-
+  const { id } = useLocalSearchParams<{ id: string }>();
   const { character } = useCharacter(+id);
 
   const info = [
