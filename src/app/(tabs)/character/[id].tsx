@@ -3,6 +3,8 @@ import BaseBadge from '@/components/ui/BaseBadge';
 import CharacterEpisodesCount from '@/features/characters/components/CharacterEpisodesCount';
 import CharacterHeader from '@/features/characters/components/CharacterHeader';
 import CharacterStatus from '@/features/characters/components/CharacterStatus';
+import { GENDERS_LABELS } from '@/features/characters/constants/genders-labels.constants';
+import { SPECIES_LABELS } from '@/features/characters/constants/species-labels.constants';
 import { useCharacter } from '@/features/characters/hooks/useCharacter';
 import { router, useLocalSearchParams } from 'expo-router';
 import { ActivityIndicator, ScrollView, Text, View } from 'react-native';
@@ -17,11 +19,15 @@ const CharacterScreen = () => {
   const info = [
     {
       label: 'Especie',
-      value: character.data?.species,
+      value: character.data?.species
+        ? (SPECIES_LABELS[character.data?.species] ?? character.data?.species)
+        : character.data?.species,
     },
     {
       label: 'Género',
-      value: character.data?.gender,
+      value: character.data?.gender
+        ? (GENDERS_LABELS[character.data?.gender] ?? character.data?.gender)
+        : character.data?.gender,
     },
     {
       label: 'Origen',
@@ -67,7 +73,7 @@ const CharacterScreen = () => {
               />
             </BaseBadge>
             <Text className="font-semibold text-ink-muted text-[0.95rem]">
-              {character.data.species}
+              {SPECIES_LABELS[character.data.species] ?? character.data.species}
             </Text>
           </View>
         </View>

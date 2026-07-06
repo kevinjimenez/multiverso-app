@@ -3,11 +3,14 @@ import { Text, View } from 'react-native';
 interface Props {
   title: string;
   count: number;
+  classNameContainer?: string;
 }
 
-const ScreenHeader = ({ title, count }: Props) => {
+const ScreenHeader = ({ title, count, classNameContainer }: Props) => {
   return (
-    <View className="flex-row justify-between items-center">
+    <View
+      className={`flex-row justify-between items-center ${classNameContainer}`}
+    >
       <View className="flex-col gap-y-0.5">
         <Text
           className="uppercase text-[0.85rem] font-semibold text-accent"

@@ -1,20 +1,22 @@
+import ScreenHeader from '@/components/shared/ScreenHeader';
+import ScreenMainContainer from '@/components/shared/ScreenMainContainer';
+import { formatEpisodeCode } from '@/helper/format-episode-code';
+import { useEpisodes } from '@/hooks/useEpisodes';
+import Ionicons from '@react-native-vector-icons/ionicons';
+import { router } from 'expo-router';
 import {
-  View,
-  Text,
   ActivityIndicator,
   FlatList,
   Pressable,
+  Text,
+  View,
 } from 'react-native';
-import React from 'react';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useEpisodes } from '@/hooks/useEpisodes';
-import { formatEpisodeCode } from '@/helper/format-episode-code';
-import Ionicons from '@react-native-vector-icons/ionicons';
-import { router } from 'expo-router';
 
 const EpisodeScreen = () => {
-  const { top } = useSafeAreaInsets();
   const { episodes } = useEpisodes();
+
+  const data = episodes.data?.pages.flatMap((page) => page.results);
+  const count = episodes.data?.pages[0]?.info.count ?? 0;
 
   if (episodes.isLoading) {
     return (
@@ -24,28 +26,9 @@ const EpisodeScreen = () => {
     );
   }
 
-  const data = episodes.data?.pages.flatMap((page) => page.results);
-  const totalCount = episodes.data?.pages[0]?.info.count ?? 0;
-
   return (
-    <View
-      className="bg-white"
-      style={{ flex: 1, paddingTop: top, paddingHorizontal: 15 }}
-    >
-      <View className="flex-row justify-between items-center">
-        <View className="flex-col gap-y-0.5">
-          <Text
-            className="uppercase text-[0.85rem] font-semibold text-accent"
-            style={{ letterSpacing: 1 }}
-          >
-            Multiverso
-          </Text>
-          <Text className="text-4xl font-bold text-ink">Episodios</Text>
-        </View>
-        <Text className="text-ink-muted font-medium text-sm">
-          {totalCount} episodios
-        </Text>
-      </View>
+    <ScreenMainContainer>
+      <ScreenHeader title="episodios" count={count} classNameContainer="mb-3" />
 
       <FlatList
         data={data}
@@ -101,7 +84,7 @@ const EpisodeScreen = () => {
           </Pressable>
         )}
       />
-    </View>
+    </ScreenMainContainer>
   );
 };
 
