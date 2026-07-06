@@ -1,5 +1,5 @@
 import BaseButton from '@/components/ui/BaseButton';
-import { useLocation } from '@/hooks/useLocation';
+import { useLocation } from '@/features/locations/hooks/useLocation';
 import Ionicons from '@react-native-vector-icons/ionicons';
 import { BlurView } from 'expo-blur';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -8,12 +8,12 @@ import { ActivityIndicator, Image, Pressable, Text, View } from 'react-native';
 
 const Modal = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const { locationById } = useLocation(+id);
+  const { location } = useLocation(+id);
   const closeModal = () => {
     router.dismiss();
   };
 
-  if (locationById.isLoading) {
+  if (location.isLoading) {
     return (
       <View className="flex-1 justify-center items-center">
         <ActivityIndicator />
@@ -48,7 +48,7 @@ const Modal = () => {
             Lugar
           </Text>
           <Text className="text-white font-bold text-3xl">
-            {locationById.data.name}
+            {location.data?.name}
           </Text>
         </View>
         <Pressable
@@ -75,14 +75,12 @@ const Modal = () => {
         <View className="py-2 flex-1">
           <View className="justify-between flex-row px-4 py-3 border-t rounded-t-xl border-l border-r items-center border-gray-300">
             <Text className="text-ink-faint font-semibold">Tipo</Text>
-            <Text className="text-lg font-semibold">
-              {locationById.data.type}
-            </Text>
+            <Text className="text-lg font-semibold">{location.data?.type}</Text>
           </View>
           <View className="justify-between flex-row px-4 py-3 border-t border-l border-r items-center border-gray-300">
             <Text className="text-ink-faint font-semibold">Temporada</Text>
             <Text className="text-lg font-semibold">
-              {locationById.data.dimension}
+              {location.data?.dimension}
             </Text>
           </View>
           <View className="justify-between flex-row px-4 py-3 border items-center rounded-b-xl border-gray-300">
@@ -94,7 +92,7 @@ const Modal = () => {
               numberOfLines={1}
               ellipsizeMode="tail"
             >
-              {locationById.data.residents.length}
+              {location.data?.residents.length}
             </Text>
           </View>
         </View>

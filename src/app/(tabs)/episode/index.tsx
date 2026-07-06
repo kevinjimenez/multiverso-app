@@ -45,7 +45,7 @@ const EpisodeScreen = () => {
         showsVerticalScrollIndicator={false}
         renderItem={({ item, index }) => (
           <EpisodeListItem
-            key={`${index}`}
+            key={index}
             episode={formatEpisodeCode(item.episode)}
             name={item.name}
             airDate={item.air_date}

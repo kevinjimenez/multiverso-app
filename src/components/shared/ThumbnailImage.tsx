@@ -2,7 +2,7 @@ import { Image, ImageProps } from 'expo-image';
 import { View, Text } from 'react-native';
 
 interface Props extends ImageProps {
-  image?: string;
+  image?: string | number;
   fallbackText?: string;
   width?: number;
   height?: number;
@@ -29,7 +29,7 @@ const ThumbnailImage = ({
 
   return (
     <Image
-      source={{ uri: image }}
+      source={typeof image === 'string' ? { uri: image } : image}
       style={{ width, height, borderRadius }}
       placeholder={{ blurhash: 'L6PZfSi_.AyE_3t7t7R**0o#DgR4' }}
       contentFit={contentFit}
