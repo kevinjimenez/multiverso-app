@@ -1,19 +1,22 @@
+import ScreenHeader from '@/components/shared/ScreenHeader';
+import ScreenMainContainer from '@/components/shared/ScreenMainContainer';
 import { useLocations } from '@/hooks/useLocations';
 import Ionicons from '@react-native-vector-icons/ionicons';
 import { router } from 'expo-router';
 import {
   ActivityIndicator,
   FlatList,
-  Text,
-  View,
   Image,
   Pressable,
+  Text,
+  View,
 } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const LocationScreen = () => {
-  const { top } = useSafeAreaInsets();
   const { locations } = useLocations();
+
+  const data = locations.data?.pages.flatMap((page) => page.results);
+  const count = locations.data?.pages[0]?.info.count ?? 0;
 
   if (locations.isLoading) {
     return (
@@ -23,28 +26,9 @@ const LocationScreen = () => {
     );
   }
 
-  const data = locations.data?.pages.flatMap((page) => page.results);
-  const totalCount = locations.data?.pages[0]?.info.count ?? 0;
-
   return (
-    <View
-      className="bg-white"
-      style={{ flex: 1, paddingTop: top, paddingHorizontal: 15 }}
-    >
-      <View className="flex-row justify-between items-center">
-        <View className="flex-col gap-y-0.5">
-          <Text
-            className="uppercase text-[0.85rem] font-semibold text-accent"
-            style={{ letterSpacing: 1 }}
-          >
-            Multiverso
-          </Text>
-          <Text className="text-4xl font-bold text-ink">Lugares</Text>
-        </View>
-        <Text className="text-ink-muted font-medium text-sm">
-          {totalCount} lugares
-        </Text>
-      </View>
+    <ScreenMainContainer>
+      <ScreenHeader title="lugares" count={count} classNameContainer="mb-3" />
 
       <FlatList
         data={data}
@@ -102,7 +86,7 @@ const LocationScreen = () => {
           </Pressable>
         )}
       />
-    </View>
+    </ScreenMainContainer>
   );
 };
 

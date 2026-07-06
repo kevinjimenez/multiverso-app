@@ -1,4 +1,5 @@
 import ScreenHeader from '@/components/shared/ScreenHeader';
+import ScreenMainContainer from '@/components/shared/ScreenMainContainer';
 import CharacterListItem from '@/features/characters/components/CharacterListItem';
 import TagFilterScroll from '@/features/characters/components/TagFilterScroll';
 import { useCharacters } from '@/features/characters/hooks/useCharacters';
@@ -12,11 +13,8 @@ import {
   Text,
   View,
 } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const CharactersScreen = () => {
-  // const { width, height } = useWindowDimensions();
-  const { top } = useSafeAreaInsets();
   const { characters } = useCharacters();
   const isLoading = useRef(false);
   const [tag, setTag] = useState('');
@@ -67,10 +65,7 @@ const CharactersScreen = () => {
   }
 
   return (
-    <View
-      className="bg-white"
-      style={{ flex: 1, paddingTop: top, paddingHorizontal: 15 }}
-    >
+    <ScreenMainContainer>
       <ScreenHeader title="personajes" count={count} />
 
       <TagFilterScroll tag={tag} onSelectTag={handleSelectTag} />
@@ -90,7 +85,7 @@ const CharactersScreen = () => {
           />
         )}
       />
-    </View>
+    </ScreenMainContainer>
   );
 };
 
