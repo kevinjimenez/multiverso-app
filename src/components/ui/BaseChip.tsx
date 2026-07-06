@@ -1,5 +1,4 @@
-import { View, Text, Pressable, PressableProps } from 'react-native';
-import React from 'react';
+import { Pressable, PressableProps, Text } from 'react-native';
 
 interface Props extends PressableProps {
   containerClassName?: string;

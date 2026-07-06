@@ -5,7 +5,7 @@ interface Props {
   count: number;
 }
 
-const CustomHeader = ({ title, count }: Props) => {
+const ScreenHeader = ({ title, count }: Props) => {
   return (
     <View className="flex-row justify-between items-center">
       <View className="flex-col gap-y-0.5">
@@ -24,4 +24,4 @@ const CustomHeader = ({ title, count }: Props) => {
   );
 };
 
-export default CustomHeader;
+export default ScreenHeader;

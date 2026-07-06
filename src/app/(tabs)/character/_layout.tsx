@@ -5,10 +5,9 @@ const CharacterStackLayout = () => {
     <Stack
       screenOptions={{
         headerShown: false,
-        // headerShadowVisible: false
       }}
     >
-      <Stack.Screen name="index" options={{ title: 'incio' }} />
+      <Stack.Screen name="index" options={{ title: 'Personajes' }} />
     </Stack>
   );
 };
