@@ -3,7 +3,14 @@ import Ionicons from '@react-native-vector-icons/ionicons';
 import { BlurView } from 'expo-blur';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router, useLocalSearchParams } from 'expo-router';
-import { ActivityIndicator, Image, Pressable, Text, View } from 'react-native';
+import {
+  ActivityIndicator,
+  Image,
+  Platform,
+  Pressable,
+  Text,
+  View,
+} from 'react-native';
 
 const Modal = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -23,7 +30,7 @@ const Modal = () => {
       <View>
         <Image
           source={require('../../../../assets/images/location-icon.png')}
-          className="h-52 w-full"
+          className="w-full h-96"
           resizeMode="cover"
         />
         <LinearGradient
@@ -47,25 +54,27 @@ const Modal = () => {
             {locationById.data.name}
           </Text>
         </View>
-        <Pressable
-          className="absolute top-4 right-5"
-          onPress={() => router.dismiss()}
-        >
-          <BlurView
-            intensity={60}
-            tint="dark"
-            style={{
-              width: 30,
-              height: 30,
-              borderRadius: 18,
-              overflow: 'hidden',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
+        {Platform.OS === 'ios' ? (
+          <Pressable
+            className="absolute top-4 right-5"
+            onPress={() => router.dismiss()}
           >
-            <Ionicons name="close" size={18} color="white" />
-          </BlurView>
-        </Pressable>
+            <BlurView
+              intensity={60}
+              tint="dark"
+              style={{
+                width: 30,
+                height: 30,
+                borderRadius: 18,
+                overflow: 'hidden',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Ionicons name="close" size={18} color="white" />
+            </BlurView>
+          </Pressable>
+        ) : null}
       </View>
       <View className="py-10 px-7 flex-1">
         <View className="py-2 flex-1">
