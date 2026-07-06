@@ -1,3 +1,6 @@
+import CustomHeader from '@/components/shared/CustomHeader';
+import BaseChip from '@/components/ui/BaseChip';
+import BaseListItem from '@/components/ui/BaseListItem';
 import { useCharacters } from '@/hooks/useCharacters';
 import Ionicons from '@react-native-vector-icons/ionicons';
 import { Image } from 'expo-image';
@@ -26,6 +29,14 @@ const CharacterScreen = () => {
   const [status, setStatus] = useState('Todos');
 
   const tags = ['Todos', 'Vivo', 'Muerto', 'Humano'];
+
+  const handleSelectTag = (tag: string) => {
+    setStatus(tag);
+  };
+
+  const handleSelectCharacter = (id: number) => {
+    router.push(`/(tabs)/character/${id}`);
+  };
 
   const onScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     if (isLoading.current) return;
@@ -67,20 +78,7 @@ const CharacterScreen = () => {
       className="bg-white"
       style={{ flex: 1, paddingTop: top, paddingHorizontal: 15 }}
     >
-      <View className="flex-row justify-between items-center">
-        <View className="flex-col gap-y-0.5">
-          <Text
-            className="uppercase text-[0.85rem] font-semibold text-accent"
-            style={{ letterSpacing: 1 }}
-          >
-            Multiverso
-          </Text>
-          <Text className="text-4xl font-bold text-ink">Personajes</Text>
-        </View>
-        <Text className="text-ink-muted font-medium text-sm">
-          {totalCount} personajes
-        </Text>
-      </View>
+      <CustomHeader title="personajes" count={totalCount} />
 
       <ScrollView
         horizontal
@@ -89,23 +87,16 @@ const CharacterScreen = () => {
         contentContainerStyle={{ gap: 8 }}
       >
         {tags.map((tag, index) => (
-          <Pressable
+          <BaseChip
             key={index}
-            className={`h-8 justify-center px-4 py-1 rounded-2xl border ${
-              status === tag
-                ? 'bg-ink border-ink'
-                : 'bg-white border-gray-200 active:bg-red-200'
-            }`}
+            containerClassName={`${status === tag ? 'bg-ink border-ink' : 'bg-white border-gray-200 active:bg-red-200'}`}
+            textClassName={`${status === tag ? 'text-white' : ''}`}
             onPress={() => {
-              setStatus(tag);
+              handleSelectTag(tag);
             }}
           >
-            <Text
-              className={`text-sm font-medium ${status === tag ? 'text-white' : ''}`}
-            >
-              {tag}
-            </Text>
-          </Pressable>
+            {tag}
+          </BaseChip>
         ))}
       </ScrollView>
 
@@ -115,13 +106,9 @@ const CharacterScreen = () => {
         onScroll={onScroll}
         showsVerticalScrollIndicator={false}
         renderItem={({ item }) => (
-          <Pressable
-            className="justify-between flex-row items-center border border-gray-300 my-1 px-3.5 py-2 rounded-xl"
-            onPress={() => {
-              router.push(`/(tabs)/character/${item.id}`);
-            }}
-          >
-            <View className="flex-row gap-4 flex-1">
+          <BaseListItem
+            onPress={() => handleSelectCharacter(item.id)}
+            prefix={
               <Image
                 source={{ uri: item.image }}
                 contentFit="cover"
@@ -130,40 +117,42 @@ const CharacterScreen = () => {
                 transition={200}
                 cachePolicy="memory-disk"
               />
-              <View className="flex-col py-1.5 flex-1">
-                <View className="flex-1">
-                  <Text
-                    className="text-ink font-semibold"
-                    numberOfLines={1}
-                    ellipsizeMode="tail"
-                  >
-                    {item.name}
-                  </Text>
+            }
+            suffix={
+              <Ionicons
+                name="chevron-forward-outline"
+                size={20}
+                color="#A6AEB6"
+              />
+            }
+          >
+            <View className="flex-col py-1.5 flex-1">
+              <View className="flex-1">
+                <Text
+                  className="text-ink font-semibold"
+                  numberOfLines={1}
+                  ellipsizeMode="tail"
+                >
+                  {item.name}
+                </Text>
+              </View>
+              <View className="flex-row gap-x-5">
+                <View className="flex-row justify-center items-center gap-x-1">
+                  <View
+                    className={`rounded-full size-1.5 ${item.status === 'Alive' ? 'bg-status-alive' : item.status === 'Dead' ? 'bg-status-dead' : 'bg-status-unknown'}`}
+                  />
+                  <Text className="text-sm">{item.status}</Text>
                 </View>
-                <View className="flex-row gap-x-5">
-                  <View className="flex-row justify-center items-center gap-x-1">
-                    <View
-                      className={`rounded-full size-1.5 ${item.status === 'Alive' ? 'bg-status-alive' : item.status === 'Dead' ? 'bg-status-dead' : 'bg-status-unknown'}`}
-                    />
-                    <Text className="text-sm">{item.status}</Text>
-                  </View>
-                  <Text
-                    className="text-sm text-ink-soft"
-                    numberOfLines={1}
-                    ellipsizeMode="tail"
-                  >
-                    {item.species}
-                  </Text>
-                </View>
+                <Text
+                  className="text-sm text-ink-soft"
+                  numberOfLines={1}
+                  ellipsizeMode="tail"
+                >
+                  {item.species}
+                </Text>
               </View>
             </View>
-
-            <Ionicons
-              name="chevron-forward-outline"
-              size={20}
-              color="#A6AEB6"
-            />
-          </Pressable>
+          </BaseListItem>
         )}
       />
     </View>

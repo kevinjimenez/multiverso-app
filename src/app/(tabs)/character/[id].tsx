@@ -1,5 +1,6 @@
 import { useCharacter } from '@/hooks/useCharacter';
 import Ionicons from '@react-native-vector-icons/ionicons';
+import { LinearGradient } from 'expo-linear-gradient';
 import { router, useLocalSearchParams } from 'expo-router';
 import {
   ActivityIndicator,
@@ -61,6 +62,16 @@ const CharacterID = () => {
             source={{ uri: rickAndMortyById.data.image }}
             resizeMode="cover"
             className="flex-1"
+          />
+          <LinearGradient
+            colors={['transparent', 'rgba(0,0,0,0.75)']}
+            style={{
+              position: 'absolute',
+              bottom: 0,
+              left: 0,
+              right: 0,
+              height: 128,
+            }}
           />
         </View>
       </View>

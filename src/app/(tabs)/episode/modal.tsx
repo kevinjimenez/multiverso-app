@@ -1,3 +1,4 @@
+import BaseButton from '@/components/ui/BaseButton';
 import { formatEpisodeCode } from '@/helper/format-episode-code';
 import { useEpisode } from '@/hooks/useEpisode';
 import { router, useLocalSearchParams } from 'expo-router';
@@ -12,6 +13,10 @@ import {
 const Modal = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { episodeById } = useEpisode(+id);
+
+  const closeModal = () => {
+    router.dismiss();
+  };
 
   if (episodeById.isLoading) {
     return (
@@ -86,12 +91,13 @@ const Modal = () => {
           </View>
         </View>
       </View>
-      <Pressable
+      <BaseButton onPress={closeModal}>Cerrar</BaseButton>
+      {/*<Pressable
         className="py-4 rounded-xl active:opacity-80 bg-accent mt-8"
         onPress={() => router.dismiss()}
       >
         <Text className="text-center text-white font-bold text-lg">Cerrar</Text>
-      </Pressable>
+      </Pressable>*/}
     </View>
   );
 };

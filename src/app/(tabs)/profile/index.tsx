@@ -1,11 +1,14 @@
+import BaseButton from '@/components/ui/BaseButton';
 import Ionicons from '@react-native-vector-icons/ionicons';
 import { router } from 'expo-router';
 import { Pressable, Text, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const ProfileScreen = () => {
-  const { top } = useSafeAreaInsets();
   const data = ['Cuenta', 'Notificaciones', 'Apariencia', 'Ayuda y soporte'];
+
+  const logout = () => {
+    router.replace('/');
+  };
 
   return (
     <View className="px-6 pb-20 bg-white" style={{ flex: 1 }}>
@@ -48,14 +51,9 @@ const ProfileScreen = () => {
         </View>
       </View>
 
-      <Pressable
-        className="group w-full p-4 border border-status-dead rounded-xl active:bg-status-dead"
-        onPress={() => router.replace('/')}
-      >
-        <Text className="text-center text-status-dead font-semibold group-active:text-white">
-          Cerrar sesión
-        </Text>
-      </Pressable>
+      <BaseButton onPress={logout} variant="outline" color="tertiary">
+        Cerrar sesión
+      </BaseButton>
     </View>
   );
 };

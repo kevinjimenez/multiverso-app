@@ -1,20 +1,17 @@
+import BaseButton from '@/components/ui/BaseButton';
 import { useLocation } from '@/hooks/useLocation';
 import Ionicons from '@react-native-vector-icons/ionicons';
 import { BlurView } from 'expo-blur';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router, useLocalSearchParams } from 'expo-router';
-import {
-  ActivityIndicator,
-  Image,
-  Platform,
-  Pressable,
-  Text,
-  View,
-} from 'react-native';
+import { ActivityIndicator, Image, Pressable, Text, View } from 'react-native';
 
 const Modal = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { locationById } = useLocation(+id);
+  const closeModal = () => {
+    router.dismiss();
+  };
 
   if (locationById.isLoading) {
     return (
@@ -54,27 +51,25 @@ const Modal = () => {
             {locationById.data.name}
           </Text>
         </View>
-        {Platform.OS === 'ios' ? (
-          <Pressable
-            className="absolute top-4 right-5"
-            onPress={() => router.dismiss()}
+        <Pressable
+          className="absolute top-10 right-5"
+          onPress={() => router.dismiss()}
+        >
+          <BlurView
+            intensity={60}
+            tint="dark"
+            style={{
+              width: 30,
+              height: 30,
+              borderRadius: 18,
+              overflow: 'hidden',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
           >
-            <BlurView
-              intensity={60}
-              tint="dark"
-              style={{
-                width: 30,
-                height: 30,
-                borderRadius: 18,
-                overflow: 'hidden',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <Ionicons name="close" size={18} color="white" />
-            </BlurView>
-          </Pressable>
-        ) : null}
+            <Ionicons name="close" size={18} color="white" />
+          </BlurView>
+        </Pressable>
       </View>
       <View className="py-10 px-7 flex-1">
         <View className="py-2 flex-1">
@@ -104,14 +99,7 @@ const Modal = () => {
           </View>
         </View>
 
-        <Pressable
-          className="py-4 rounded-xl active:opacity-80 bg-accent mt-8"
-          onPress={() => router.dismiss()}
-        >
-          <Text className="text-center text-white font-bold text-lg">
-            Cerrar
-          </Text>
-        </Pressable>
+        <BaseButton onPress={closeModal}>Cerrar</BaseButton>
       </View>
     </View>
   );
