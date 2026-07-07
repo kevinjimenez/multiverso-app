@@ -13,7 +13,7 @@ const LocationScreen = () => {
 
   const goToLocation = (id: number) => {
     router.push({
-      pathname: '/location/modal',
+      pathname: '/location/by-id',
       params: { id },
     });
   };

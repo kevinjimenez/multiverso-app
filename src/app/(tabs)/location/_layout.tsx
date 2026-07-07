@@ -10,7 +10,7 @@ const LocationsStackLayout = () => {
     >
       <Stack.Screen name="index" />
       <Stack.Screen
-        name="modal"
+        name="by-id"
         options={{
           presentation: 'modal',
         }}
