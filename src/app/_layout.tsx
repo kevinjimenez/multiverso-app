@@ -18,6 +18,7 @@ const RootLayout = () => {
             name="location/by-id"
             options={{ presentation: 'modal' }}
           />
+          <Stack.Screen name="character/[id]" />
         </Stack>
         <StatusBar style="dark" />
       </QueryClientProvider>
