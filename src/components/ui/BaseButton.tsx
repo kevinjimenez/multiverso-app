@@ -1,4 +1,5 @@
 import { Pressable, PressableProps, Text } from 'react-native';
+import { twMerge } from 'tailwind-merge';
 
 interface Props extends PressableProps {
   children: string;
@@ -55,7 +56,7 @@ const BaseButton = ({
         onPress={onPress}
       >
         <Text
-          className={`text-center ${textColor} font-semibold group-active:text-white`}
+          className={`text-center ${textColor} font-semibold group-active:${textColor}`}
         >
           {children}
         </Text>
@@ -65,7 +66,11 @@ const BaseButton = ({
 
   return (
     <Pressable
-      className={`py-4 rounded-xl active:opacity-80 ${disable ? btnDisableColor : btnColor} ${className}`}
+      className={twMerge(
+        'py-4 rounded-xl active:opacity-80',
+        disable ? btnDisableColor : btnColor,
+        className,
+      )}
       onPress={onPress}
       disabled={disable}
     >

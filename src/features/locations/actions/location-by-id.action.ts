@@ -1,8 +1,9 @@
 import { rickAndMortyApi } from '@/core/api/rick-and-morty-api';
+import { Location } from '../interfaces/location.interface';
 
 export const locationByIdAction = async (id: number | string) => {
   try {
-    const { data } = await rickAndMortyApi.get<any>(`/location/${id}`);
+    const { data } = await rickAndMortyApi.get<Location>(`/location/${id}`);
 
     return data;
   } catch (error) {

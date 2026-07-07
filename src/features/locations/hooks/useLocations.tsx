@@ -1,19 +1,13 @@
-import { locationsRickAndMortyAction } from '@/core/actions/locations/locations.action';
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { locationsAction } from '../actions/locations.action';
 
 export const useLocations = () => {
-  // const locations = useQuery({
-  //   queryKey: ['rick_and_morty', 'locations'],
-  //   queryFn: () => locationsRickAndMortyAction({}),
-  //   staleTime: 1000 * 60 * 60 * 24,
-  // });
-
   const locations = useInfiniteQuery({
     initialPageParam: 1,
     queryKey: ['rick_and_morty', 'locations'],
     queryFn: ({ pageParam }) => {
       console.log({ pageParam });
-      return locationsRickAndMortyAction({ page: pageParam });
+      return locationsAction({ page: pageParam });
     },
     staleTime: 1000 * 60 * 60 * 24, // 24 horas
     getNextPageParam: (lastPage, pages) => {

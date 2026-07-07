@@ -1,4 +1,5 @@
 import { Text, View } from 'react-native';
+import { twMerge } from 'tailwind-merge';
 import { STATUS_LABEL } from '../constants/status-labels.constants';
 import { Status } from '../enums/status.enum';
 
@@ -19,12 +20,25 @@ const CharacterStatus = ({
 
   return (
     <View
-      className={`flex-row justify-center items-center gap-x-1 ${classNameContainer}`}
+      className={twMerge(
+        'flex-row justify-center items-center gap-x-1',
+        classNameContainer,
+      )}
     >
       <View
-        className={`rounded-full size-1.5 animate-pulse ${status === Status.ALIVE ? 'bg-status-alive' : status === Status.DEAD ? 'bg-status-dead' : 'bg-status-unknown'} ${classNameStatus}`}
+        className={twMerge(
+          'rounded-full size-1.5 animate-pulse',
+          status === Status.ALIVE
+            ? 'bg-status-alive'
+            : status === Status.DEAD
+              ? 'bg-status-dead'
+              : 'bg-status-unknown',
+          classNameStatus,
+        )}
       />
-      <Text className={`text-sm ${classNameLabel}`}>{statusLabel}</Text>
+      <Text className={twMerge('text-sm', classNameLabel)}>
+        {statusLabel}
+      </Text>
     </View>
   );
 };

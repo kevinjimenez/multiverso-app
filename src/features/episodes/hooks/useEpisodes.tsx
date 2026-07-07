@@ -1,19 +1,13 @@
-import { episodesRickAndMortyAction } from '@/core/actions/episodes/episodes.action';
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { episodesAction } from '../actions/episodes.action';
 
 export const useEpisodes = () => {
-  // const episodes = useQuery({
-  //   queryKey: ['rick_and_morty', 'episodes'],
-  //   queryFn: () => episodesRickAndMortyAction({}),
-  //   staleTime: 1000 * 60 * 60 * 24,
-  // });
-
   const episodes = useInfiniteQuery({
     initialPageParam: 1,
     queryKey: ['rick_and_morty', 'episodes'],
     queryFn: ({ pageParam }) => {
       console.log({ pageParam });
-      return episodesRickAndMortyAction({ page: pageParam });
+      return episodesAction({ page: pageParam });
     },
     staleTime: 1000 * 60 * 60 * 24, // 24 horas
     getNextPageParam: (lastPage, pages) => {

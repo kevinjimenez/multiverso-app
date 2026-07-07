@@ -10,7 +10,7 @@ const EpisodesStackLayout = () => {
     >
       <Stack.Screen name="index" />
       <Stack.Screen
-        name="modal"
+        name="by-id"
         options={{
           presentation: 'formSheet',
           sheetAllowedDetents: [0.55, 0.55], // 50% y 90% de la pantalla
