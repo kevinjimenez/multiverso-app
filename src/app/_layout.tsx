@@ -1,4 +1,4 @@
-import { Slot } from 'expo-router';
+import { Stack } from 'expo-router';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import '../global.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -9,11 +9,16 @@ import { StatusBar } from 'expo-status-bar';
 const queryClient = new QueryClient();
 
 const RootLayout = () => {
-  // return <Slot />
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <QueryClientProvider client={queryClient}>
-        <Slot />
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="(tabs)" />
+          <Stack.Screen
+            name="location/by-id"
+            options={{ presentation: 'modal' }}
+          />
+        </Stack>
         <StatusBar style="dark" />
       </QueryClientProvider>
     </GestureHandlerRootView>
