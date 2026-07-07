@@ -1,4 +1,5 @@
 import { Pressable, PressableProps, Text } from 'react-native';
+import { twMerge } from 'tailwind-merge';
 
 interface Props extends PressableProps {
   containerClassName?: string;
@@ -14,12 +15,15 @@ const BaseChip = ({
 }: Props) => {
   return (
     <Pressable
-      className={`h-8 justify-center px-4 py-1 rounded-2xl border ${
-        containerClassName
-      }`}
+      className={twMerge(
+        'h-8 justify-center px-4 py-1 rounded-2xl border',
+        containerClassName,
+      )}
       onPress={onPress}
     >
-      <Text className={`text-sm font-medium ${textClassName}`}>{children}</Text>
+      <Text className={twMerge('text-sm font-medium', textClassName)}>
+        {children}
+      </Text>
     </Pressable>
   );
 };

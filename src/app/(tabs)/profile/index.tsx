@@ -67,8 +67,8 @@ const ProfileScreen = () => {
         </Text>
         <InfoTable
           data={info}
-          classNameLabel="font-semibold text-black text-lg"
-          classNameItem="py-10"
+          classNameLabel="font-semibold text-black text-base"
+          classNameItem="py-4"
         />
       </View>
 

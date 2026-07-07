@@ -1,4 +1,5 @@
 import { Text, View } from 'react-native';
+import { twMerge } from 'tailwind-merge';
 
 interface Props {
   title: string;
@@ -9,7 +10,10 @@ interface Props {
 const ScreenHeader = ({ title, count, classNameContainer }: Props) => {
   return (
     <View
-      className={`flex-row justify-between items-center ${classNameContainer}`}
+      className={twMerge(
+        'flex-row justify-between items-center',
+        classNameContainer,
+      )}
     >
       <View className="flex-col gap-y-0.5">
         <Text
