@@ -1,5 +1,5 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { charactersAction } from '../actions/characters.action';
+import { charactersAction } from '../../../core/actions/characters/characters.action';
 
 export const useCharacters = () => {
   const characters = useInfiniteQuery({

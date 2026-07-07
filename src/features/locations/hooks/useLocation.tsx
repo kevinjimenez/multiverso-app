@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { locationByIdAction } from '../actions/location-by-id.action';
+import { locationByIdAction } from '../../../core/actions/locations/location-by-id.action';
 
 export const useLocation = (id: number) => {
   const location = useQuery({
