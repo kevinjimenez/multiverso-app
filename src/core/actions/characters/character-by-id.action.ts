@@ -1,5 +1,5 @@
 import { rickAndMortyApi } from '@/core/api/rick-and-morty-api';
-import { Character } from '../interfaces/character.interface';
+import { Character } from '../../../features/characters/interfaces/character.interface';
 
 export const characterByIdAction = async (id: number | string) => {
   try {

@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { characterByIdAction } from '../actions/character-by-id.action';
+import { characterByIdAction } from '../../../core/actions/characters/character-by-id.action';
 
 export const useCharacter = (id: number) => {
   const character = useQuery({

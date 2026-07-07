@@ -1,5 +1,5 @@
 import { rickAndMortyApi } from '@/core/api/rick-and-morty-api';
-import { Episode } from '../interfaces/episode.interface';
+import { Episode } from '../../../features/episodes/interfaces/episode.interface';
 
 export const episodeByIdAction = async (id: number | string) => {
   try {

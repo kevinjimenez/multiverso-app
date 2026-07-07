@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { episodeByIdAction } from '../actions/episode-by-id.action';
+import { episodeByIdAction } from '../../../core/actions/episodes/episode-by-id.action';
 
 export const useEpisode = (id: number) => {
   const episode = useQuery({

@@ -1,5 +1,5 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { locationsAction } from '../actions/locations.action';
+import { locationsAction } from '../../../core/actions/locations/locations.action';
 
 export const useLocations = () => {
   const locations = useInfiniteQuery({
