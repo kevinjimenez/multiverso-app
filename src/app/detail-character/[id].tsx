@@ -10,7 +10,7 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { ActivityIndicator, ScrollView, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-const CharacterScreen = () => {
+const DetailCharacterScreen = () => {
   const safeArea = useSafeAreaInsets();
   const { id } = useLocalSearchParams<{ id: string }>();
   const { character } = useCharacter(+id);
@@ -86,4 +86,4 @@ const CharacterScreen = () => {
   );
 };
 
-export default CharacterScreen;
+export default DetailCharacterScreen;

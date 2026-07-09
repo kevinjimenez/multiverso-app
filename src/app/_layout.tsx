@@ -15,10 +15,10 @@ const RootLayout = () => {
         <Stack screenOptions={{ headerShown: false }}>
           <Stack.Screen name="(tabs)" />
           <Stack.Screen
-            name="location/by-id"
+            name="detail-location/id"
             options={{ presentation: 'modal' }}
           />
-          <Stack.Screen name="character/[id]" />
+          <Stack.Screen name="detail-character/[id]" />
         </Stack>
         <StatusBar style="dark" />
       </QueryClientProvider>
