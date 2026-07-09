@@ -7,7 +7,7 @@ import { router } from 'expo-router';
 import { Text, View } from 'react-native';
 
 const ProfileScreen = () => {
-  const { user, clearUser } = useUserStore();
+  const { clearUser } = useUserStore();
   const info = [
     {
       label: 'Cuenta',
@@ -54,7 +54,7 @@ const ProfileScreen = () => {
 
   return (
     <View className="px-6 pb-20 bg-white" style={{ flex: 1 }}>
-      <ProfileHeader username={user?.username ?? 'Guest'} />
+      <ProfileHeader />
 
       <View className="mb-8">
         <Text className="text-ink-soft text-xs font-medium pt-3 pb-2">
