@@ -1,11 +1,13 @@
 import InfoTable from '@/components/shared/InfoTable';
 import BaseButton from '@/components/ui/BaseButton';
 import ProfileHeader from '@/features/auth/components/ProfileHeader';
+import { useUserStore } from '@/features/auth/store/useUser';
 import Ionicons from '@react-native-vector-icons/ionicons';
 import { router } from 'expo-router';
 import { Text, View } from 'react-native';
 
 const ProfileScreen = () => {
+  const { user, clearUser } = useUserStore();
   const info = [
     {
       label: 'Cuenta',
@@ -46,12 +48,13 @@ const ProfileScreen = () => {
   ];
 
   const logout = () => {
+    clearUser();
     router.replace('/');
   };
 
   return (
     <View className="px-6 pb-20 bg-white" style={{ flex: 1 }}>
-      <ProfileHeader />
+      <ProfileHeader username={user?.username ?? 'Guest'} />
 
       <View className="mb-8">
         <Text className="text-ink-soft text-xs font-medium pt-3 pb-2">
