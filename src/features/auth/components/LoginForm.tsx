@@ -4,13 +4,13 @@ import { Formik } from 'formik';
 import { View } from 'react-native';
 
 interface Props {
-  onPress: () => void;
+  onSubmit: (values: { username: string; password: string }) => void;
 }
 
-const LoginForm = ({ onPress }: Props) => {
+const LoginForm = ({ onSubmit }: Props) => {
   return (
-    <Formik initialValues={{ username: '', password: '' }} onSubmit={onPress}>
-      {({ values, handleChange, handleBlur }) => (
+    <Formik initialValues={{ username: '', password: '' }} onSubmit={onSubmit}>
+      {({ values, handleChange, handleBlur, handleSubmit }) => (
         <>
           <View className="gap-y-3 my-5">
             <BaseInput
@@ -28,7 +28,7 @@ const LoginForm = ({ onPress }: Props) => {
             />
           </View>
           <BaseButton
-            onPress={onPress}
+            onPress={() => handleSubmit()}
             disable={!values.username || !values.password}
           >
             Entrar

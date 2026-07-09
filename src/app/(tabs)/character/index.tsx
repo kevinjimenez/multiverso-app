@@ -27,7 +27,7 @@ const CharactersScreen = () => {
     setTag(tag);
   };
   const handleSelectCharacter = (id: number) => {
-    router.push(`/character/${id}`);
+    router.push(`/detail-character/${id}`);
   };
   const onScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     if (isLoading.current) return;

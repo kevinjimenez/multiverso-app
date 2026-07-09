@@ -6,7 +6,7 @@ import { formatEpisodeCode } from '@/helper/format-episode-code';
 import { router, useLocalSearchParams } from 'expo-router';
 import { ActivityIndicator, Text, View } from 'react-native';
 
-const ByIdModal = () => {
+const DetailModal = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { episode } = useEpisode(+id);
 
@@ -76,4 +76,4 @@ const ByIdModal = () => {
   );
 };
 
-export default ByIdModal;
+export default DetailModal;

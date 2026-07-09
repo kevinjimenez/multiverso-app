@@ -1,5 +1,5 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { episodesAction } from '../../../core/actions/episodes/episodes.action';
+import { episodesAction } from '../actions/episodes.action';
 
 export const useEpisodes = () => {
   const episodes = useInfiniteQuery({

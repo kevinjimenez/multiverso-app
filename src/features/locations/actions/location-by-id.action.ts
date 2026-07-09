@@ -1,5 +1,5 @@
 import { rickAndMortyApi } from '@/core/api/rick-and-morty-api';
-import { Location } from '../../../features/locations/interfaces/location.interface';
+import { Location } from '../interfaces/location.interface';
 
 export const locationByIdAction = async (id: number | string) => {
   try {

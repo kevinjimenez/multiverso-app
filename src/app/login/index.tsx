@@ -1,6 +1,7 @@
 import LoginBrand from '@/features/auth/components/LoginBrand';
 import LoginFooter from '@/features/auth/components/LoginFooter';
 import LoginForm from '@/features/auth/components/LoginForm';
+import { useUserStore } from '@/features/auth/store/useUser';
 import { router } from 'expo-router';
 import { KeyboardAvoidingView, Platform, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -8,6 +9,13 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const LoginScreen = () => {
   const safeArea = useSafeAreaInsets();
+  const { setUser } = useUserStore();
+
+  const handleLogin = (values: { username: string; password: string }) => {
+    console.log({ username: values.username });
+    setUser({ username: values.username });
+    router.replace('/(tabs)/character');
+  };
 
   const goToHome = () => {
     router.replace('/(tabs)/character');
@@ -26,7 +34,7 @@ const LoginScreen = () => {
         >
           <LoginBrand />
 
-          <LoginForm onPress={goToHome} />
+          <LoginForm onSubmit={handleLogin} />
 
           <LoginFooter onPressGuest={goToHome} />
         </KeyboardAvoidingView>

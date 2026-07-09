@@ -1,6 +1,6 @@
 import { rickAndMortyApi } from '@/core/api/rick-and-morty-api';
 import { Pagination } from '@/interfaces/pagination.interface';
-import { Episode } from '../../../features/episodes/interfaces/episode.interface';
+import { Episode } from '../interfaces/episode.interface';
 import { ApiResponse } from '@/interfaces/api-response.interface';
 
 export const episodesAction = async ({ page = 1 }: Pagination) => {

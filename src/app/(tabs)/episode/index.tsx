@@ -14,7 +14,7 @@ const EpisodeScreen = () => {
 
   const goToEpisode = (id: number) => {
     router.push({
-      pathname: '/episode/by-id',
+      pathname: '/episode/detail',
       params: { id },
     });
   };

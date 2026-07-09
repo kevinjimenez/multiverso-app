@@ -7,13 +7,6 @@ const TabsLayout = () => {
       screenOptions={{
         tabBarActiveTintColor: '#11B0A3',
         headerShown: false,
-        // headerTitle: () => <View className='flex flex-row'>
-        //   <View className='flex flex-col'>
-        //     <Text>Multiverso</Text>
-        //     <Text>Personajes</Text>
-        //   </View>
-        //   <Text>20 personajes</Text>
-        // </View>
       }}
     >
       <Tabs.Screen
