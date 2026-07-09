@@ -12,6 +12,7 @@ const BaseChip = ({
   textClassName,
   onPress,
   children,
+  ...props
 }: Props) => {
   return (
     <Pressable
@@ -20,6 +21,7 @@ const BaseChip = ({
         containerClassName,
       )}
       onPress={onPress}
+      {...props}
     >
       <Text className={twMerge('text-sm font-medium', textClassName)}>
         {children}

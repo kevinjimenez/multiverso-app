@@ -16,6 +16,7 @@ const BaseButton = ({
   variant,
   className,
   disable = false,
+  ...props
 }: Props) => {
   const btnColor = {
     primary: 'bg-primary',
@@ -39,7 +40,7 @@ const BaseButton = ({
 
   if (variant === 'text-only') {
     return (
-      <Pressable onPress={onPress}>
+      <Pressable onPress={onPress} {...props}>
         <Text
           className={`${textColor} text-center text-[0.95rem] font-semibold`}
         >
@@ -54,6 +55,7 @@ const BaseButton = ({
       <Pressable
         className={`group w-full p-4 border ${borderColor} rounded-xl active:${btnColor}`}
         onPress={onPress}
+        {...props}
       >
         <Text
           className={`text-center ${textColor} font-semibold group-active:${textColor}`}
@@ -73,6 +75,7 @@ const BaseButton = ({
       )}
       onPress={onPress}
       disabled={disable}
+      {...props}
     >
       <Text className="text-white text-center text-lg font-bold">
         {children}
