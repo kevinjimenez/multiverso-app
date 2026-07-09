@@ -5,7 +5,7 @@ import { useLocation } from '@/features/locations/hooks/useLocation';
 import { router, useLocalSearchParams } from 'expo-router';
 import { ActivityIndicator, View } from 'react-native';
 
-const ByIdModel = () => {
+const DetailLocationModel = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { location } = useLocation(+id);
 
@@ -47,4 +47,4 @@ const ByIdModel = () => {
   );
 };
 
-export default ByIdModel;
+export default DetailLocationModel;
