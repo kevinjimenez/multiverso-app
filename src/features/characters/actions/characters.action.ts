@@ -1,7 +1,7 @@
 import { rickAndMortyApi } from '@/core/api/rick-and-morty-api';
 import { ApiResponse } from '@/interfaces/api-response.interface';
 import { Pagination } from '@/interfaces/pagination.interface';
-import { Character } from '../../../features/characters/interfaces/character.interface';
+import { Character } from '../interfaces/character.interface';
 
 export const charactersAction = async ({ page = 1 }: Pagination) => {
   try {

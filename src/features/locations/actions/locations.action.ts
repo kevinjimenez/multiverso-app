@@ -1,6 +1,6 @@
 import { rickAndMortyApi } from '@/core/api/rick-and-morty-api';
 import { ApiResponse } from '@/interfaces/api-response.interface';
-import { Location } from '../../../features/locations/interfaces/location.interface';
+import { Location } from '../interfaces/location.interface';
 
 interface Options {
   page?: number;
