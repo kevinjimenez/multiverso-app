@@ -5,6 +5,9 @@ import { charactersAction } from '../actions/characters.action';
 export const useCharacters = ({ status, species, gender }: Filter = {}) => {
   const characters = useInfiniteQuery({
     initialPageParam: 1,
+    // El filtro va dentro del queryKey: cada combinación es una query distinta,
+    // así que al cambiar de tag React Query arranca de cero desde la página 1
+    // en vez de seguir paginando sobre el filtro anterior.
     queryKey: ['rick_and_morty', 'characters', { status, species, gender }],
     queryFn: ({ pageParam }) => {
       // console.log({ pageParam });

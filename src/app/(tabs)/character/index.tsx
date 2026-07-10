@@ -19,12 +19,17 @@ const CharactersScreen = () => {
   const { tag, status, species, gender, selectTag } = useCharactersFilter();
   const { characters } = useCharacters({ status, species, gender });
   const isLoading = useRef(false);
+  // Referencia a la FlatList para poder resetear el scroll al inicio al cambiar de filtro.
+  // const listRef = useRef<FlatList>(null);
 
   const data = characters.data?.pages.flatMap((page) => page.results);
   const count = characters.data?.pages[0]?.info.count ?? 0;
 
   const handleSelectTag = (tag: string) => {
     selectTag(tag);
+    // El queryKey cambia y React Query ya trae los datos desde la página 1,
+    // pero el scroll de la FlatList no se resetea solo: hay que forzarlo.
+    // listRef.current?.scrollToOffset({ offset: 0, animated: false });
   };
   const handleSelectCharacter = (id: number) => {
     router.push(`/detail-character/${id}`);
@@ -72,6 +77,8 @@ const CharactersScreen = () => {
       <TagFilterScroll tag={tag} onSelectTag={handleSelectTag} />
 
       <FlatList
+        // Ref usada en handleSelectTag para forzar el scroll al inicio al cambiar de filtro.
+        // ref={listRef}
         data={data}
         keyExtractor={(character) => String(character.id)}
         onScroll={onScroll}
