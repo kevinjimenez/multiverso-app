@@ -12,8 +12,13 @@ const TagFilterScroll = ({ tag, onSelectTag }: Props) => {
     <ScrollView
       horizontal
       showsHorizontalScrollIndicator={false}
-      className="py-5"
-      contentContainerStyle={{ gap: 8 }}
+      style={{ flexGrow: 0 }}
+      contentContainerStyle={{
+        columnGap: 8,
+        // alignItems: 'center',
+        paddingTop: 20,
+        paddingBottom: 10,
+      }}
     >
       {CHARACTERS_TAGS.map((item, index) => (
         <BaseChip

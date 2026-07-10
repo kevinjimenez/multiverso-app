@@ -85,14 +85,14 @@ const CharactersScreen = () => {
     });
   };
 
-  if (characters.isLoading) {
-    return (
-      <View className="flex flex-1 justify-center items-center">
-        <Text className="mb-4 font-medium">Espere por favor</Text>
-        <ActivityIndicator className="text-primary" size={30} />
-      </View>
-    );
-  }
+  // if (characters.isLoading) {
+  //   return (
+  //     <View className="flex flex-1 justify-center items-center">
+  //       <Text className="mb-4 font-medium">Espere por favor</Text>
+  //       <ActivityIndicator className="text-primary" size={30} />
+  //     </View>
+  //   );
+  // }
 
   return (
     <ScreenMainContainer>
@@ -106,23 +106,31 @@ const CharactersScreen = () => {
         onChangeText={searchByName}
       />
 
-      <FlatList
-        // Ref usada en handleSelectTag para forzar el scroll al inicio al cambiar de filtro.
-        // ref={listRef}
-        data={data}
-        keyExtractor={(character) => String(character.id)}
-        onScroll={onScroll}
-        showsVerticalScrollIndicator={false}
-        renderItem={({ item }) => (
-          <CharacterListItem
-            name={item.name}
-            status={item.status}
-            species={item.species}
-            img={item.image}
-            onPress={() => handleSelectCharacter(item.id)}
-          />
-        )}
-      />
+      {characters.isLoading ? (
+        <View className="flex flex-1 justify-center items-center">
+          <Text className="mb-4 font-medium">Espere por favor</Text>
+          <ActivityIndicator className="text-primary" size={30} />
+        </View>
+      ) : (
+        <FlatList
+          // Ref usada en handleSelectTag para forzar el scroll al inicio al cambiar de filtro.
+          // ref={listRef}
+          style={{ flex: 1 }}
+          data={data}
+          keyExtractor={(character) => String(character.id)}
+          onScroll={onScroll}
+          showsVerticalScrollIndicator={false}
+          renderItem={({ item }) => (
+            <CharacterListItem
+              name={item.name}
+              status={item.status}
+              species={item.species}
+              img={item.image}
+              onPress={() => handleSelectCharacter(item.id)}
+            />
+          )}
+        />
+      )}
     </ScreenMainContainer>
   );
 };

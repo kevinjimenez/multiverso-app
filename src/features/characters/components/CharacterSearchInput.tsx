@@ -10,7 +10,7 @@ interface Props {
 
 const CharacterSearchInput = ({ value, placeholder, onChangeText }: Props) => {
   return (
-    <View className="py-4">
+    <View className="pb-4 pt-2.5">
       <BaseInput
         value={value}
         onChangeText={onChangeText}
