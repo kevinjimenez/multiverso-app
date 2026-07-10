@@ -90,9 +90,10 @@ const CharactersScreen = () => {
     <ScreenMainContainer>
       <ScreenHeader title="personajes" count={count} />
 
-      {!characters.error ? (
+      {characters.error ? (
         <ErrorView
-          message="Ocurrió un error al cargar los personajes"
+          message="Algo salió mal"
+          description="No pudimos conectar con la API de Rick and Morty. Revisa tu conexión e inténtalo de nuevo."
           onRetry={() => characters.refetch()}
         />
       ) : (
