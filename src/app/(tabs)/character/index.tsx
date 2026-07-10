@@ -1,9 +1,11 @@
 import ScreenHeader from '@/components/shared/ScreenHeader';
 import ScreenMainContainer from '@/components/shared/ScreenMainContainer';
+import BaseInput from '@/components/ui/BaseInput';
 import CharacterListItem from '@/features/characters/components/CharacterListItem';
 import TagFilterScroll from '@/features/characters/components/TagFilterScroll';
 import { useCharacters } from '@/features/characters/hooks/useCharacters';
 import { useCharactersFilter } from '@/features/characters/hooks/useCharactersFilter';
+import Ionicons from '@react-native-vector-icons/ionicons';
 import { router } from 'expo-router';
 import { useRef } from 'react';
 import {
@@ -32,6 +34,8 @@ const CharactersScreen = () => {
     // listRef.current?.scrollToOffset({ offset: 0, animated: false });
   };
   const handleSelectCharacter = (id: number) => {
+    // Cierra el teclado antes de navegar, por si el buscador estaba enfocado.
+    // Keyboard.dismiss();
     router.push(`/detail-character/${id}`);
   };
   const onScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -75,6 +79,13 @@ const CharactersScreen = () => {
       <ScreenHeader title="personajes" count={count} />
 
       <TagFilterScroll tag={tag} onSelectTag={handleSelectTag} />
+
+      <View className="py-4">
+        <BaseInput
+          placeholder="Buscar personaje"
+          prefixIcon={<Ionicons name="search-outline" color="gray" size={15} />}
+        />
+      </View>
 
       <FlatList
         // Ref usada en handleSelectTag para forzar el scroll al inicio al cambiar de filtro.
