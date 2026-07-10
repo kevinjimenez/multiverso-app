@@ -6,7 +6,7 @@ const ProfileHeader = () => {
   const { user } = useUserStore();
   const username = user?.username ?? 'Guest';
 
-  const avatarPlaceholder = () => {
+  const avatarSeed = () => {
     return username.charAt(0);
   };
 
@@ -16,7 +16,7 @@ const ProfileHeader = () => {
 
   return (
     <View className="items-center pt-24">
-      <Avatar placeholder={avatarPlaceholder()} />
+      <Avatar seed={avatarSeed()} />
 
       <View className="items-center gap-y-1 my-4">
         <Text className="font-semibold text-2xl text-ink">
