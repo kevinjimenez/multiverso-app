@@ -90,52 +90,48 @@ const CharactersScreen = () => {
     <ScreenMainContainer>
       <ScreenHeader title="personajes" count={count} />
 
-      {characters.error ? (
+      <TagFilterScroll tag={tag} onSelectTag={handleSelectTag} />
+
+      <CharacterSearchInput
+        value={nameCharacter}
+        placeholder="Buscar personaje"
+        onChangeText={searchByName}
+      />
+
+      {characters.isLoading ? (
+        <LoadingView />
+      ) : characters.error ? (
         <ErrorView
           message="Algo salió mal"
           description="No pudimos conectar con la API de Rick and Morty. Revisa tu conexión e inténtalo de nuevo."
           onRetry={() => characters.refetch()}
         />
       ) : (
-        <>
-          <TagFilterScroll tag={tag} onSelectTag={handleSelectTag} />
-
-          <CharacterSearchInput
-            value={nameCharacter}
-            placeholder="Buscar personaje"
-            onChangeText={searchByName}
-          />
-
-          {characters.isLoading ? (
-            <LoadingView />
-          ) : (
-            <FlatList
-              // Ref usada en handleSelectTag para forzar el scroll al inicio al cambiar de filtro.
-              // ref={listRef}
-              style={{ flex: 1 }}
-              data={data}
-              keyExtractor={(character) => String(character.id)}
-              onScroll={onScroll}
-              showsVerticalScrollIndicator={false}
-              ListEmptyComponent={
-                <View className="flex-1 justify-center items-center py-10">
-                  <Text className="text-ink-muted">
-                    No se encontraron personajes
-                  </Text>
-                </View>
-              }
-              renderItem={({ item }) => (
-                <CharacterListItem
-                  name={item.name}
-                  status={item.status}
-                  species={item.species}
-                  img={item.image}
-                  onPress={() => handleSelectCharacter(item.id)}
-                />
-              )}
+        <FlatList
+          // Ref usada en handleSelectTag para forzar el scroll al inicio al cambiar de filtro.
+          // ref={listRef}
+          style={{ flex: 1 }}
+          data={data}
+          keyExtractor={(character) => String(character.id)}
+          onScroll={onScroll}
+          showsVerticalScrollIndicator={false}
+          ListEmptyComponent={
+            <View className="flex-1 justify-center items-center py-10">
+              <Text className="text-ink-muted">
+                No se encontraron personajes
+              </Text>
+            </View>
+          }
+          renderItem={({ item }) => (
+            <CharacterListItem
+              name={item.name}
+              status={item.status}
+              species={item.species}
+              img={item.image}
+              onPress={() => handleSelectCharacter(item.id)}
             />
           )}
-        </>
+        />
       )}
     </ScreenMainContainer>
   );
