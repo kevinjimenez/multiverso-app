@@ -18,7 +18,7 @@ const TagFilterScroll = ({ tag, onSelectTag }: Props) => {
       {CHARACTERS_TAGS.map((item, index) => (
         <BaseChip
           key={index}
-          containerClassName={`${tag === item.value ? 'bg-ink border-ink' : 'bg-white border-gray-200 active:bg-red-200'}`}
+          containerClassName={`${tag === item.value ? 'bg-ink border-ink' : 'bg-white border-gray-200 active:bg-gray-100'}`}
           textClassName={`${tag === item.value ? 'text-white' : ''}`}
           onPress={() => onSelectTag(item.value)}
         >

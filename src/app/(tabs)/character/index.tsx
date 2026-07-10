@@ -3,8 +3,9 @@ import ScreenMainContainer from '@/components/shared/ScreenMainContainer';
 import CharacterListItem from '@/features/characters/components/CharacterListItem';
 import TagFilterScroll from '@/features/characters/components/TagFilterScroll';
 import { useCharacters } from '@/features/characters/hooks/useCharacters';
+import { useCharactersFilter } from '@/features/characters/hooks/useCharactersFilter';
 import { router } from 'expo-router';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -15,16 +16,15 @@ import {
 } from 'react-native';
 
 const CharactersScreen = () => {
-  const { characters } = useCharacters();
+  const { tag, status, species, gender, selectTag } = useCharactersFilter();
+  const { characters } = useCharacters({ status, species, gender });
   const isLoading = useRef(false);
-
-  const [tag, setTag] = useState('');
 
   const data = characters.data?.pages.flatMap((page) => page.results);
   const count = characters.data?.pages[0]?.info.count ?? 0;
 
   const handleSelectTag = (tag: string) => {
-    setTag(tag);
+    selectTag(tag);
   };
   const handleSelectCharacter = (id: number) => {
     router.push(`/detail-character/${id}`);

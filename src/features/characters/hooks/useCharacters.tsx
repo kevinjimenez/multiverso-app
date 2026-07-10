@@ -1,17 +1,18 @@
+import { Filter } from '@/interfaces/filter.interface';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { charactersAction } from '../actions/characters.action';
 
-export const useCharacters = () => {
+export const useCharacters = ({ status, species, gender }: Filter = {}) => {
   const characters = useInfiniteQuery({
     initialPageParam: 1,
-    queryKey: ['rick_and_morty', 'characters'],
+    queryKey: ['rick_and_morty', 'characters', { status, species, gender }],
     queryFn: ({ pageParam }) => {
-      console.log({ pageParam });
-      return charactersAction({ page: pageParam });
+      // console.log({ pageParam });
+      return charactersAction({ page: pageParam, species, status, gender });
     },
     staleTime: 1000 * 60 * 60 * 24, // 24 horas
     getNextPageParam: (lastPage, pages) => {
-      console.log({ next: lastPage.info.next, pages: pages.length });
+      // console.log({ next: lastPage.info.next, pages: pages.length });
       // return lastPage.info.next ? pages.length + 1 : undefined;
       return pages.length + 1;
     },
