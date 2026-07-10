@@ -1,3 +1,5 @@
+import ErrorView from '@/components/shared/ErrorView';
+import LoadingView from '@/components/shared/LoadingView';
 import ScreenHeader from '@/components/shared/ScreenHeader';
 import ScreenMainContainer from '@/components/shared/ScreenMainContainer';
 import CharacterListItem from '@/features/characters/components/CharacterListItem';
@@ -8,7 +10,6 @@ import { useCharactersFilter } from '@/features/characters/hooks/useCharactersFi
 import { router } from 'expo-router';
 import { useRef } from 'react';
 import {
-  ActivityIndicator,
   FlatList,
   Keyboard,
   NativeScrollEvent,
@@ -85,51 +86,55 @@ const CharactersScreen = () => {
     });
   };
 
-  // if (characters.isLoading) {
-  //   return (
-  //     <View className="flex flex-1 justify-center items-center">
-  //       <Text className="mb-4 font-medium">Espere por favor</Text>
-  //       <ActivityIndicator className="text-primary" size={30} />
-  //     </View>
-  //   );
-  // }
-
   return (
     <ScreenMainContainer>
       <ScreenHeader title="personajes" count={count} />
 
-      <TagFilterScroll tag={tag} onSelectTag={handleSelectTag} />
-
-      <CharacterSearchInput
-        value={nameCharacter}
-        placeholder="Buscar personaje"
-        onChangeText={searchByName}
-      />
-
-      {characters.isLoading ? (
-        <View className="flex flex-1 justify-center items-center">
-          <Text className="mb-4 font-medium">Espere por favor</Text>
-          <ActivityIndicator className="text-primary" size={30} />
-        </View>
+      {!characters.error ? (
+        <ErrorView
+          message="Ocurrió un error al cargar los personajes"
+          onRetry={() => characters.refetch()}
+        />
       ) : (
-        <FlatList
-          // Ref usada en handleSelectTag para forzar el scroll al inicio al cambiar de filtro.
-          // ref={listRef}
-          style={{ flex: 1 }}
-          data={data}
-          keyExtractor={(character) => String(character.id)}
-          onScroll={onScroll}
-          showsVerticalScrollIndicator={false}
-          renderItem={({ item }) => (
-            <CharacterListItem
-              name={item.name}
-              status={item.status}
-              species={item.species}
-              img={item.image}
-              onPress={() => handleSelectCharacter(item.id)}
+        <>
+          <TagFilterScroll tag={tag} onSelectTag={handleSelectTag} />
+
+          <CharacterSearchInput
+            value={nameCharacter}
+            placeholder="Buscar personaje"
+            onChangeText={searchByName}
+          />
+
+          {characters.isLoading ? (
+            <LoadingView />
+          ) : (
+            <FlatList
+              // Ref usada en handleSelectTag para forzar el scroll al inicio al cambiar de filtro.
+              // ref={listRef}
+              style={{ flex: 1 }}
+              data={data}
+              keyExtractor={(character) => String(character.id)}
+              onScroll={onScroll}
+              showsVerticalScrollIndicator={false}
+              ListEmptyComponent={
+                <View className="flex-1 justify-center items-center py-10">
+                  <Text className="text-ink-muted">
+                    No se encontraron personajes
+                  </Text>
+                </View>
+              }
+              renderItem={({ item }) => (
+                <CharacterListItem
+                  name={item.name}
+                  status={item.status}
+                  species={item.species}
+                  img={item.image}
+                  onPress={() => handleSelectCharacter(item.id)}
+                />
+              )}
             />
           )}
-        />
+        </>
       )}
     </ScreenMainContainer>
   );

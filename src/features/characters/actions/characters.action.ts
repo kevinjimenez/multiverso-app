@@ -29,6 +29,6 @@ export const charactersAction = async ({
     return data;
   } catch (error) {
     console.log(error);
-    throw 'Error api';
+    throw error;
   }
 };
