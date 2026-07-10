@@ -5,6 +5,7 @@ import { Character } from '../interfaces/character.interface';
 
 export const charactersAction = async ({
   page = 1,
+  name,
   species,
   status,
   gender,
@@ -12,6 +13,7 @@ export const charactersAction = async ({
   try {
     const params = {
       page,
+      ...(name && { name }),
       ...(status && { status }),
       ...(species && { species }),
       ...(gender && { gender }),

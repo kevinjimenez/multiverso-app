@@ -1,16 +1,16 @@
 import ScreenHeader from '@/components/shared/ScreenHeader';
 import ScreenMainContainer from '@/components/shared/ScreenMainContainer';
-import BaseInput from '@/components/ui/BaseInput';
 import CharacterListItem from '@/features/characters/components/CharacterListItem';
+import CharacterSearchInput from '@/features/characters/components/CharacterSearchInput';
 import TagFilterScroll from '@/features/characters/components/TagFilterScroll';
 import { useCharacters } from '@/features/characters/hooks/useCharacters';
 import { useCharactersFilter } from '@/features/characters/hooks/useCharactersFilter';
-import Ionicons from '@react-native-vector-icons/ionicons';
 import { router } from 'expo-router';
 import { useRef } from 'react';
 import {
   ActivityIndicator,
   FlatList,
+  Keyboard,
   NativeScrollEvent,
   NativeSyntheticEvent,
   Text,
@@ -18,8 +18,22 @@ import {
 } from 'react-native';
 
 const CharactersScreen = () => {
-  const { tag, status, species, gender, selectTag } = useCharactersFilter();
-  const { characters } = useCharacters({ status, species, gender });
+  const {
+    tag,
+    status,
+    species,
+    gender,
+    selectTag,
+    nameCharacter,
+    setNameCharacter,
+    debouncedName,
+  } = useCharactersFilter();
+  const { characters } = useCharacters({
+    status,
+    species,
+    gender,
+    name: debouncedName,
+  });
   const isLoading = useRef(false);
   // Referencia a la FlatList para poder resetear el scroll al inicio al cambiar de filtro.
   // const listRef = useRef<FlatList>(null);
@@ -27,6 +41,12 @@ const CharactersScreen = () => {
   const data = characters.data?.pages.flatMap((page) => page.results);
   const count = characters.data?.pages[0]?.info.count ?? 0;
 
+  const searchByName = (name: string) => {
+    if (name.trim() === '') {
+      Keyboard.dismiss();
+    }
+    setNameCharacter(name);
+  };
   const handleSelectTag = (tag: string) => {
     selectTag(tag);
     // El queryKey cambia y React Query ya trae los datos desde la página 1,
@@ -80,12 +100,11 @@ const CharactersScreen = () => {
 
       <TagFilterScroll tag={tag} onSelectTag={handleSelectTag} />
 
-      <View className="py-4">
-        <BaseInput
-          placeholder="Buscar personaje"
-          prefixIcon={<Ionicons name="search-outline" color="gray" size={15} />}
-        />
-      </View>
+      <CharacterSearchInput
+        value={nameCharacter}
+        placeholder="Buscar personaje"
+        onChangeText={searchByName}
+      />
 
       <FlatList
         // Ref usada en handleSelectTag para forzar el scroll al inicio al cambiar de filtro.
