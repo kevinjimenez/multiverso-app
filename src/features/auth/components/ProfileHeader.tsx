@@ -4,13 +4,14 @@ import { useUserStore } from '../store/useUser';
 
 const ProfileHeader = () => {
   const { user } = useUserStore();
+  const username = user?.username ?? 'Guest';
 
   const avatarPlaceholder = () => {
-    return user?.username.charAt(0) ?? 'G';
+    return username.charAt(0);
   };
 
   const email = () => {
-    return `${user?.username.trim().toLowerCase() ?? 'guest'}google.com`;
+    return `${username.trim().toLowerCase()}@google.com`;
   };
 
   return (
