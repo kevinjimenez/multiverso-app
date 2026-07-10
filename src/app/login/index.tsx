@@ -1,6 +1,7 @@
 import LoginBrand from '@/features/auth/components/LoginBrand';
 import LoginFooter from '@/features/auth/components/LoginFooter';
 import LoginForm from '@/features/auth/components/LoginForm';
+import { LoginFormValues } from '@/features/auth/schemas/login.schema';
 import { useUserStore } from '@/features/auth/store/useUser';
 import { router } from 'expo-router';
 import { KeyboardAvoidingView, Platform, View } from 'react-native';
@@ -11,9 +12,8 @@ const LoginScreen = () => {
   const safeArea = useSafeAreaInsets();
   const { setUser } = useUserStore();
 
-  const handleLogin = (values: { username: string; password: string }) => {
-    console.log({ username: values.username });
-    setUser({ username: values.username });
+  const handleLogin = ({ username }: LoginFormValues) => {
+    setUser({ username });
     router.replace('/(tabs)/character');
   };
 
