@@ -1,13 +1,17 @@
 import InfoTable from '@/components/shared/InfoTable';
 import BaseButton from '@/components/ui/BaseButton';
 import ProfileHeader from '@/features/auth/components/ProfileHeader';
+import TermsModal from '@/features/profile/components/TermsModal';
 import { useUserStore } from '@/features/auth/store/useUser';
 import Ionicons from '@react-native-vector-icons/ionicons';
 import { router } from 'expo-router';
-import { Text, View } from 'react-native';
+import { useState } from 'react';
+import { Alert, Text, View } from 'react-native';
 
 const ProfileScreen = () => {
   const { clearUser } = useUserStore();
+  const [isTermsVisible, setIsTermsVisible] = useState(false);
+
   const info = [
     {
       label: 'Cuenta',
@@ -15,7 +19,7 @@ const ProfileScreen = () => {
         <Ionicons name="chevron-forward-outline" size={20} color="#A6AEB6" />
       ),
       onPress: () => {
-        console.log('aqui');
+        router.push('/profile/account');
       },
     },
     {
@@ -24,7 +28,7 @@ const ProfileScreen = () => {
         <Ionicons name="chevron-forward-outline" size={20} color="#A6AEB6" />
       ),
       onPress: () => {
-        console.log('aqui');
+        router.push('/profile/notification');
       },
     },
     {
@@ -33,8 +37,15 @@ const ProfileScreen = () => {
         <Ionicons name="chevron-forward-outline" size={20} color="#A6AEB6" />
       ),
       onPress: () => {
-        console.log('aqui');
+        router.push('/profile/appearance');
       },
+    },
+    {
+      label: 'Términos y condiciones',
+      children: (
+        <Ionicons name="chevron-forward-outline" size={20} color="#A6AEB6" />
+      ),
+      onPress: () => setIsTermsVisible(true),
     },
     {
       label: 'Ayuda y soporte',
@@ -42,7 +53,11 @@ const ProfileScreen = () => {
         <Ionicons name="chevron-forward-outline" size={20} color="#A6AEB6" />
       ),
       onPress: () => {
-        console.log('aqui');
+        Alert.alert(
+          'Ayuda y soporte',
+          '¿Tienes algún problema o sugerencia? Escríbenos a soporte@multiverso.app y te responderemos lo antes posible.',
+          [{ text: 'Entendido' }],
+        );
       },
     },
   ];
@@ -70,6 +85,11 @@ const ProfileScreen = () => {
       <BaseButton onPress={logout} variant="outline" color="tertiary">
         Cerrar sesión
       </BaseButton>
+
+      <TermsModal
+        visible={isTermsVisible}
+        onClose={() => setIsTermsVisible(false)}
+      />
     </View>
   );
 };

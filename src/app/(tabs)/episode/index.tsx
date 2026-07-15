@@ -1,10 +1,12 @@
+import ErrorView from '@/components/shared/ErrorView';
+import LoadingView from '@/components/shared/LoadingView';
 import ScreenHeader from '@/components/shared/ScreenHeader';
 import ScreenMainContainer from '@/components/shared/ScreenMainContainer';
 import EpisodeListItem from '@/features/episodes/components/EpisodeListItem';
 import { useEpisodes } from '@/features/episodes/hooks/useEpisodes';
 import { formatEpisodeCode } from '@/helper/format-episode-code';
 import { router } from 'expo-router';
-import { ActivityIndicator, FlatList, View } from 'react-native';
+import { FlatList } from 'react-native';
 
 const EpisodeScreen = () => {
   const { episodes } = useEpisodes();
@@ -25,35 +27,37 @@ const EpisodeScreen = () => {
     }
   };
 
-  if (episodes.isLoading) {
-    return (
-      <View className="flex-1 justify-center items-center">
-        <ActivityIndicator />
-      </View>
-    );
-  }
-
   return (
     <ScreenMainContainer>
       <ScreenHeader title="episodios" count={count} classNameContainer="mb-3" />
 
-      <FlatList
-        data={data}
-        keyExtractor={(item) => String(item.id)}
-        onEndReached={loadNextPage}
-        onEndReachedThreshold={0.6}
-        showsVerticalScrollIndicator={false}
-        renderItem={({ item, index }) => (
-          <EpisodeListItem
-            key={index}
-            episode={formatEpisodeCode(item.episode)}
-            name={item.name}
-            airDate={item.air_date}
-            total={item.characters.length}
-            onPress={() => goToEpisode(item.id)}
-          />
-        )}
-      />
+      {episodes.isLoading ? (
+        <LoadingView />
+      ) : episodes.error ? (
+        <ErrorView
+          message="Algo salió mal"
+          description="No pudimos conectar con la API de Rick and Morty. Revisa tu conexión e inténtalo de nuevo."
+          onRetry={() => episodes.refetch()}
+        />
+      ) : (
+        <FlatList
+          data={data}
+          keyExtractor={(item) => String(item.id)}
+          onEndReached={loadNextPage}
+          onEndReachedThreshold={0.6}
+          showsVerticalScrollIndicator={false}
+          renderItem={({ item, index }) => (
+            <EpisodeListItem
+              key={index}
+              episode={formatEpisodeCode(item.episode)}
+              name={item.name}
+              airDate={item.air_date}
+              total={item.characters.length}
+              onPress={() => goToEpisode(item.id)}
+            />
+          )}
+        />
+      )}
     </ScreenMainContainer>
   );
 };

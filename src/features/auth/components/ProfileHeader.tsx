@@ -3,20 +3,11 @@ import { Text, View } from 'react-native';
 import { useUserStore } from '../store/useUser';
 
 const ProfileHeader = () => {
-  const { user } = useUserStore();
-  const username = user?.username ?? 'Guest';
-
-  const avatarSeed = () => {
-    return username.charAt(0);
-  };
-
-  const email = () => {
-    return `${username.trim().toLowerCase()}@google.com`;
-  };
+  const { user, avatar, email } = useUserStore();
 
   return (
     <View className="items-center pt-24">
-      <Avatar seed={avatarSeed()} />
+      <Avatar seed={avatar()} />
 
       <View className="items-center gap-y-1 my-4">
         <Text className="font-semibold text-2xl text-ink">
