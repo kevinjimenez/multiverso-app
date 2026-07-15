@@ -13,7 +13,7 @@ const LoginScreen = () => {
   const { setUser } = useUserStore();
 
   const handleLogin = ({ username }: LoginFormValues) => {
-    setUser({ username });
+    setUser({ username, guest: false });
     router.replace('/(tabs)/character');
   };
 
@@ -22,24 +22,27 @@ const LoginScreen = () => {
   };
 
   return (
-    <ScrollView
-      style={{ paddingTop: safeArea.top }}
-      contentContainerStyle={{ flexGrow: 1 }}
-      keyboardShouldPersistTaps="handled"
+    <KeyboardAvoidingView
+      className="bg-white px-8"
+      style={{
+        flex: 1,
+        paddingTop: safeArea.top,
+      }}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
-      <View className="bg-white px-8 pb-8" style={{ flex: 1 }}>
-        <KeyboardAvoidingView
-          style={{ flex: 1 }}
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        >
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1 }}
+        keyboardShouldPersistTaps="handled"
+      >
+        <View className="pb-8" style={{ flex: 1 }}>
           <LoginBrand />
 
           <LoginForm onSubmit={handleLogin} />
 
           <LoginFooter onPressGuest={goToHome} />
-        </KeyboardAvoidingView>
-      </View>
-    </ScrollView>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 
