@@ -1,9 +1,11 @@
+import ErrorView from '@/components/shared/ErrorView';
+import LoadingView from '@/components/shared/LoadingView';
 import ScreenHeader from '@/components/shared/ScreenHeader';
 import ScreenMainContainer from '@/components/shared/ScreenMainContainer';
 import LocationListItem from '@/features/locations/components/LocationListItem';
 import { useLocations } from '@/features/locations/hooks/useLocations';
 import { router } from 'expo-router';
-import { ActivityIndicator, FlatList, View } from 'react-native';
+import { FlatList } from 'react-native';
 
 const LocationScreen = () => {
   const { locations } = useLocations();
@@ -23,34 +25,36 @@ const LocationScreen = () => {
     }
   };
 
-  if (locations.isLoading) {
-    return (
-      <View className="flex-1 justify-center items-center">
-        <ActivityIndicator />
-      </View>
-    );
-  }
-
   return (
     <ScreenMainContainer>
       <ScreenHeader title="lugares" count={count} classNameContainer="mb-3" />
 
-      <FlatList
-        data={data}
-        keyExtractor={(item) => String(item.id)}
-        showsVerticalScrollIndicator={false}
-        onEndReached={loadNextPage}
-        onEndReachedThreshold={0.6}
-        renderItem={({ item, index }) => (
-          <LocationListItem
-            key={index}
-            name={item.name}
-            dimension={item.dimension}
-            total={item.residents.length}
-            onPress={() => goToLocation(item.id)}
-          />
-        )}
-      />
+      {locations.isLoading ? (
+        <LoadingView />
+      ) : locations.error ? (
+        <ErrorView
+          message="Algo salió mal"
+          description="No pudimos conectar con la API de Rick and Morty. Revisa tu conexión e inténtalo de nuevo."
+          onRetry={() => locations.refetch()}
+        />
+      ) : (
+        <FlatList
+          data={data}
+          keyExtractor={(item) => String(item.id)}
+          showsVerticalScrollIndicator={false}
+          onEndReached={loadNextPage}
+          onEndReachedThreshold={0.6}
+          renderItem={({ item, index }) => (
+            <LocationListItem
+              key={index}
+              name={item.name}
+              dimension={item.dimension}
+              total={item.residents.length}
+              onPress={() => goToLocation(item.id)}
+            />
+          )}
+        />
+      )}
     </ScreenMainContainer>
   );
 };
